@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { paradas as allParadas, configuracion } from '@/lib/data'
+import DynamicMap from '@/components/dynamic-map'
 
 export default function RealTimeConsultant() {
   const [selectedRoute, setSelectedRoute] = useState('santafe_montevera')
@@ -295,31 +296,10 @@ export default function RealTimeConsultant() {
         </Card>
       </div>
 
-      {/* Mapa Placeholder */}
-      <Card className="mt-8">
-        <CardHeader>
-          <CardTitle>Mapa Interactivo en Tiempo Real</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="bg-gray-100 h-96 rounded-lg flex items-center justify-center">
-            <div className="text-center text-gray-500">
-              <MapPin className="h-12 w-12 mx-auto mb-4" />
-              <p className="text-lg font-medium">Mapa Interactivo</p>
-              <p className="text-sm">Visualización de rutas, paradas y colectivos en tiempo real</p>
-              <div className="mt-4 flex justify-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
-                  <span className="text-xs">SF → MV</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-green-500 rounded-full"></div>
-                  <span className="text-xs">MV → SF</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Mapa en Tiempo Real */}
+      <div className="mt-8">
+        <DynamicMap />
+      </div>
     </div>
   )
 }
