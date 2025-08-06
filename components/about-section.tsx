@@ -1,0 +1,140 @@
+import { Users, Award, MapPin, Clock } from 'lucide-react'
+import { Card, CardContent } from '@/components/ui/card'
+
+export default function AboutSection() {
+  const stats = [
+    {
+      icon: <Users className="h-8 w-8 text-green-600" />,
+      number: "25+",
+      label: "Años de experiencia"
+    },
+    {
+      icon: <MapPin className="h-8 w-8 text-green-600" />,
+      number: "98",
+      label: "Paradas de servicio"
+    },
+    {
+      icon: <Clock className="h-8 w-8 text-green-600" />,
+      number: "72",
+      label: "Servicios diarios"
+    },
+    {
+      icon: <Award className="h-8 w-8 text-green-600" />,
+      number: "100%",
+      label: "Compromiso con la calidad"
+    }
+  ]
+
+  return (
+    <div className="container mx-auto px-4">
+      <div className="text-center mb-12">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Sobre Monte Vera
+        </h2>
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          Más de dos décadas conectando comunidades con un servicio de transporte confiable y moderno
+        </p>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+        {stats.map((stat, index) => (
+          <Card key={index} className="text-center">
+            <CardContent className="p-6">
+              <div className="flex justify-center mb-4">
+                {stat.icon}
+              </div>
+              <div className="text-2xl font-bold text-gray-900 mb-2">
+                {stat.number}
+              </div>
+              <div className="text-sm text-gray-600">
+                {stat.label}
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Contenido principal de la sección "Sobre Monte Vera" */}
+      <div className="space-y-12"> {/* Contenedor para apilar verticalmente */}
+        {/* Sección de Nuestra Historia (Texto) */}
+        <div>
+          <h3 className="text-2xl font-bold text-gray-900 mb-6">
+            Nuestra Historia
+          </h3>
+          <div className="space-y-4 text-gray-600">
+            <p>
+              Monte Vera nació con la misión de conectar las comunidades de Santa Fe y Monte Vera, 
+              brindando un servicio de transporte público confiable, seguro y accesible para todos.
+            </p>
+            <p>
+              Durante más de 25 años, hemos sido testigos del crecimiento de estas localidades, 
+              adaptando nuestro servicio a las necesidades cambiantes de nuestros pasajeros y 
+              incorporando tecnología moderna para mejorar la experiencia de viaje.
+            </p>
+            <p>
+              Hoy operamos con una flota moderna que recorre 98 paradas estratégicamente ubicadas, 
+              conectando 6 localidades en un recorrido de 55 minutos que facilita el acceso al 
+              trabajo, educación y servicios esenciales.
+            </p>
+          </div>
+        </div>
+
+        {/* Sección de Tarjetas (Misión, Valores, Cobertura) - Ahora en horizontal */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <Card className="bg-green-50 border-green-200">
+            <CardContent className="p-6">
+              <h4 className="text-lg font-semibold text-green-900 mb-3">
+                Nuestra Misión
+              </h4>
+              <p className="text-green-800">
+                Proporcionar un servicio de transporte público eficiente, seguro y accesible 
+                que conecte las comunidades de Santa Fe y Monte Vera, contribuyendo al 
+                desarrollo social y económico de la región.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-blue-50 border-blue-200">
+            <CardContent className="p-6">
+              <h4 className="text-lg font-semibold text-blue-900 mb-3">
+                Nuestros Valores
+              </h4>
+              <ul className="text-blue-800 space-y-2">
+                <li>• <strong>Puntualidad:</strong> Respetamos los horarios establecidos</li>
+                <li>• <strong>Seguridad:</strong> Priorizamos el bienestar de nuestros pasajeros</li>
+                <li>• <strong>Calidad:</strong> Mantenemos altos estándares en nuestro servicio</li>
+                <li>• <strong>Compromiso:</strong> Con la comunidad y el medio ambiente</li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gray-50 border-gray-200">
+            <CardContent className="p-6">
+              <h4 className="text-lg font-semibold text-gray-900 mb-3">
+                Cobertura del Servicio
+              </h4>
+              <div className="grid grid-cols-2 gap-4 text-sm text-gray-700">
+                <div>
+                  <div className="font-medium">Santa Fe</div>
+                  <div className="text-xs text-gray-500">16 paradas</div>
+                </div>
+                <div>
+                  <div className="font-medium">Espora</div>
+                  <div className="text-xs text-gray-500">31 paradas</div>
+                </div>
+                <div>
+                  <div className="font-medium">Monte Vera</div>
+                  <div className="text-xs text-gray-500">41 paradas</div>
+                </div>
+                <div>
+                  <div className="font-medium">Otras localidades</div>
+                  <div className="text-xs text-gray-500">10 paradas</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  )
+}
