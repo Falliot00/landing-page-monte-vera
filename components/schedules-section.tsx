@@ -114,21 +114,12 @@ export default function SchedulesSection() {
         <TabsList className="grid w-full grid-cols-3 mb-8">
           <TabsTrigger value="laborables">
             Lunes a Viernes
-            <Badge variant="secondary" className="ml-2">
-              {currentSchedule.laborables.servicios}
-            </Badge>
           </TabsTrigger>
           <TabsTrigger value="sabados">
             Sábados
-            <Badge variant="secondary" className="ml-2">
-              {currentSchedule.sabados.servicios}
-            </Badge>
           </TabsTrigger>
           <TabsTrigger value="domingos">
             Domingos y Feriados
-            <Badge variant="secondary" className="ml-2">
-              {currentSchedule.domingos.servicios}
-            </Badge>
           </TabsTrigger>
         </TabsList>
 

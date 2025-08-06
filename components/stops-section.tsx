@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { paradas as allParadasData, configuracion } from '@/lib/data'
+import DynamicStopsMap from '@/components/dynamic-stops-map'
 
 export default function StopsSection() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -271,32 +272,8 @@ export default function StopsSection() {
         </CardContent>
       </Card>
 
-      {/* Mapa Interactivo Placeholder */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <MapPin className="h-5 w-5 text-green-600" />
-            <span>Mapa Interactivo de Paradas</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="bg-gray-100 h-96 rounded-lg flex items-center justify-center">
-            <div className="text-center text-gray-500">
-              <MapPin className="h-12 w-12 mx-auto mb-4" />
-              <p className="text-lg font-medium">Mapa Interactivo</p>
-              <p className="text-sm mb-4">Visualización de todas las 98 paradas georreferenciadas</p>
-              <div className="flex justify-center space-x-4 text-xs">
-                {paradasPorLocalidadSummary.map((data) => (
-                  <div key={data.locality} className="flex items-center space-x-1">
-                    <div className={`w-3 h-3 rounded-full ${data.dotColorClass}`}></div>
-                    <span>{data.locality}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Mapa Interactivo de Paradas */}
+      <DynamicStopsMap />
 
       {/* Información Adicional */}
       <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">

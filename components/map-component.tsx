@@ -125,7 +125,7 @@ export default function MapComponent() {
     const speed = device.sp || 0
     
     if (!isOnline) return 'Desconectado'
-    if (speed > 5) return `En ruta (${speed} km/h)`
+    if (speed > 5) return `En ruta`
     return 'Parado'
   }
 
@@ -202,10 +202,10 @@ export default function MapComponent() {
       </CardHeader>
       
       <CardContent>
-        <div className="h-96 w-full rounded-lg overflow-hidden border">
+        <div className="h-[600px] w-full rounded-lg overflow-hidden border">
           <MapContainer
             center={mapCenter}
-            zoom={11}
+            zoom={12}
             style={{ height: '100%', width: '100%' }}
             className="z-0"
           >

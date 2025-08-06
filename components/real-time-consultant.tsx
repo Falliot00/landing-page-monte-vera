@@ -10,34 +10,17 @@ import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { paradas as allParadas, configuracion } from '@/lib/data'
 import DynamicMap from '@/components/dynamic-map'
+import { BusTimingService, type BusArrivalResult } from '@/lib/bus-timing-service'
 
 export default function RealTimeConsultant() {
   const [selectedRoute, setSelectedRoute] = useState('santafe_montevera')
   const [selectedStop, setSelectedStop] = useState('')
   const [isLoadingLocation, setIsLoadingLocation] = useState(false)
   const [isLoadingGPS, setIsLoadingGPS] = useState(false)
-  const [gpsResult, setGpsResult] = useState<any>(null)
+  const [busArrivalResult, setBusArrivalResult] = useState<BusArrivalResult | null>(null)
   const [nearestStop, setNearestStop] = useState<any>(null)
+  const [error, setError] = useState<string | null>(null)
 
-  // Simular colectivos en tiempo real
-  const [buses] = useState([
-    {
-      id: "MV001",
-      ruta: "santafe_montevera",
-      ubicacion: { lat: -31.615, lng: -60.697 },
-      velocidad: 35,
-      proximaParada: "MV11",
-      estado: "en_ruta"
-    },
-    {
-      id: "MV002", 
-      ruta: "montevera_santafe",
-      ubicacion: { lat: -31.520, lng: -60.685 },
-      velocidad: 42,
-      proximaParada: "MV65",
-      estado: "en_ruta"
-    }
-  ])
 
   // Detectar ubicación del usuario
   const detectLocation = () => {
@@ -78,27 +61,29 @@ export default function RealTimeConsultant() {
     }
   }
 
-  // Consultar GPS en tiempo real
+  // Consultar tiempo real basado en horarios oficiales
   const consultarGPS = () => {
     if (!selectedStop) return
     
     setIsLoadingGPS(true)
+    setError(null)
     
-    // Simular consulta GPS
+    // Simular tiempo de procesamiento realista
     setTimeout(() => {
-      const tiempoEstimado = Math.floor(Math.random() * 25) + 5 // 5-30 minutos
-      const siguienteColectivo = Math.floor(Math.random() * 40) + 15 // 15-55 minutos
-      
-      setGpsResult({
-        tiempoEstimado,
-        siguienteColectivo,
-        colectivoId: buses.find(b => b.ruta === selectedRoute)?.id || 'MV001',
-        distancia: `${(Math.random() * 2 + 0.5).toFixed(1)} km`,
-        metodo: 'GPS + Google Maps Traffic'
-      })
-      
-      setIsLoadingGPS(false)
-    }, 2000)
+      try {
+        const result = BusTimingService.calculateBusArrival({
+          routeId: selectedRoute as keyof typeof configuracion.rutas,
+          stopId: selectedStop
+        })
+        
+        setBusArrivalResult(result)
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Error al calcular horarios')
+        setBusArrivalResult(null)
+      } finally {
+        setIsLoadingGPS(false)
+      }
+    }, 1500)
   }
 
   const getParadasForRoute = (routeId: string) => {
@@ -122,10 +107,10 @@ export default function RealTimeConsultant() {
     <div className="container mx-auto px-4">
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Consultor GPS en Tiempo Real
+          Consultor de Horarios en Tiempo Real
         </h2>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Encuentra tu colectivo, calcula tiempos de llegada precisos.
+          Calcula tiempos de llegada basados en horarios oficiales y ubicación de paradas.
         </p>
       </div>
 
@@ -241,55 +226,86 @@ export default function RealTimeConsultant() {
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
               <Clock className="h-5 w-5 text-blue-600" />
-              <span>Resultados en Tiempo Real</span>
+              <span>Horarios Calculados</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {!gpsResult ? (
+            {error && (
+              <Alert className="mb-4">
+                <AlertDescription className="text-red-600">
+                  {error}
+                </AlertDescription>
+              </Alert>
+            )}
+            
+            {!busArrivalResult && !error ? (
               <div className="text-center py-12 text-gray-500">
                 <Bus className="h-12 w-12 mx-auto mb-4 opacity-50" />
                 <p>Selecciona una parada y consulta para ver los tiempos</p>
               </div>
-            ) : (
+            ) : busArrivalResult && (
               <div className="space-y-6">
-                {/* Tiempo Estimado */}
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-semibold text-blue-900">Próximo Colectivo</h3>
-                      <p className="text-2xl font-bold text-blue-600">
-                        {gpsResult.tiempoEstimado} minutos
-                      </p>
+                {/* Estado del Servicio */}
+                {busArrivalResult.status === 'no_service' ? (
+                  <div className="bg-red-50 p-4 rounded-lg text-center">
+                    <h3 className="font-semibold text-red-900 mb-2">No hay más servicios</h3>
+                    <p className="text-red-700">No hay más colectivos programados para hoy</p>
+                  </div>
+                ) : (
+                  <>
+                    {/* Próximo Colectivo */}
+                    <div className="bg-blue-50 p-4 rounded-lg">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3 className="font-semibold text-blue-900">Próximo Colectivo</h3>
+                          <p className={`text-2xl font-bold ${BusTimingService.getStatusColor(busArrivalResult.minutesToArrival)}`}>
+                            {BusTimingService.formatTimeDifference(busArrivalResult.minutesToArrival)}
+                          </p>
+                          <p className="text-sm text-blue-700 mt-1">
+                            {BusTimingService.getStatusMessage(busArrivalResult.status, busArrivalResult.minutesToArrival)}
+                          </p>
+                        </div>
+                        <div className="text-blue-600">
+                          <Bus className="h-8 w-8" />
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-blue-600">
-                      <Bus className="h-8 w-8" />
+
+                    {/* Siguiente Colectivo */}
+                    {busArrivalResult.followingBus && (
+                      <div className="bg-gray-50 p-4 rounded-lg">
+                        <h3 className="font-semibold text-gray-700 mb-2">Siguiente Servicio</h3>
+                        <p className="text-lg font-medium text-gray-600">
+                          {BusTimingService.formatTimeDifference(busArrivalResult.followingBus.minutesToArrival)}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          Salida: {busArrivalResult.followingBus.departureTime}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Información del Viaje */}
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600">Salida Terminal:</span>
+                        <span className="font-medium">{busArrivalResult.departureTime}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600">Llegada Estimada:</span>
+                        <span className="font-medium">
+                          {busArrivalResult.nextBusArrival.toLocaleTimeString('es-AR', { 
+                            hour: '2-digit', 
+                            minute: '2-digit' 
+                          })}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600">Método:</span>
+                        <span className="text-xs text-green-600">Horarios Oficiales + Cálculo Preciso</span>
+                      </div>
                     </div>
-                  </div>
-                </div>
-
-                {/* Siguiente Colectivo */}
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-gray-700 mb-2">Siguiente Servicio</h3>
-                  <p className="text-lg font-medium text-gray-600">
-                    En {gpsResult.siguienteColectivo} minutos
-                  </p>
-                </div>
-
-                {/* Información del Viaje */}
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Colectivo ID:</span>
-                    <Badge variant="outline">{gpsResult.colectivoId}</Badge>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Distancia:</span>
-                    <span className="font-medium">{gpsResult.distancia}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Método:</span>
-                    <span className="text-xs text-green-600">{gpsResult.metodo}</span>
-                  </div>
-                </div>
+                  </>
+                )}
               </div>
             )}
           </CardContent>
