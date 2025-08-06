@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import type L from 'leaflet'
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { MapPin } from 'lucide-react'
@@ -9,7 +10,10 @@ import coordenadasSFMV from '@/lib/coordenadas_recorrido_santa_fe_monte_vera.jso
 import coordenadasMVSF from '@/lib/coordenadas_recorrido_monte_vera_santa_fe.json'
 
 export default function StopsMap() {
-  const [icons, setIcons] = useState<any>(null)
+  const [icons, setIcons] = useState<{
+    stopIconSFMV: L.DivIcon
+    stopIconMVSF: L.DivIcon
+  } | null>(null)
 
   // Crear las rutas como polylines usando las coordenadas de los archivos JSON
   const santaFeToMonteVeraRoute = coordenadasSFMV.map(coord => [coord.lat, coord.lng] as [number, number])

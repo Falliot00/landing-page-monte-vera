@@ -1,13 +1,14 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import type L from 'leaflet'
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { MapPin, Bus, RefreshCw, Play, Pause } from 'lucide-react'
 import { gpsService } from '@/lib/gps-service'
-import { paradas, configuracion } from '@/lib/data'
+import { configuracion } from '@/lib/data'
 import coordenadasSFMV from '@/lib/coordenadas_recorrido_santa_fe_monte_vera.json'
 import coordenadasMVSF from '@/lib/coordenadas_recorrido_monte_vera_santa_fe.json'
 
@@ -30,7 +31,11 @@ export default function MapComponent() {
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [pollingInterval, setPollingInterval] = useState<NodeJS.Timeout | null>(null)
-  const [icons, setIcons] = useState<any>(null)
+  const [icons, setIcons] = useState<{
+    busMovingIcon: L.Icon
+    busStoppedIcon: L.Icon
+    busOfflineIcon: L.Icon
+  } | null>(null)
 
   // Crear las rutas como polylines usando las coordenadas de los archivos JSON
   const santaFeToMonteVeraRoute = coordenadasSFMV.map(coord => [coord.lat, coord.lng] as [number, number])
@@ -41,11 +46,13 @@ export default function MapComponent() {
     const loadIcons = async () => {
       try {
         const { busMovingIcon, busStoppedIcon, busOfflineIcon } = await import('@/lib/map-icons')
-        setIcons({
-          busMovingIcon,
-          busStoppedIcon,
-          busOfflineIcon
-        })
+        if (busMovingIcon && busStoppedIcon && busOfflineIcon) {
+          setIcons({
+            busMovingIcon,
+            busStoppedIcon,
+            busOfflineIcon
+          })
+        }
       } catch (error) {
         console.error('Error loading icons:', error)
       }
@@ -87,6 +94,7 @@ export default function MapComponent() {
         setPollingInterval(null)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPolling])
 
   const togglePolling = () => {
@@ -111,14 +119,14 @@ export default function MapComponent() {
   }
 
   // Función para obtener emoji para la lista
-  const getDeviceEmoji = (device: DeviceLocation) => {
-    const isOnline = device.ol === 1
-    const speed = device.sp || 0
-    
-    if (!isOnline) return '🔴' // Offline
-    if (speed > 5) return '🚌' // En movimiento
-    return '🟡' // Parado
-  }
+  // const getDeviceEmoji = (device: DeviceLocation) => {
+  //   const isOnline = device.ol === 1
+  //   const speed = device.sp || 0
+  //   
+  //   if (!isOnline) return '🔴' // Offline
+  //   if (speed > 5) return '🚌' // En movimiento
+  //   return '🟡' // Parado
+  // }
 
   const getDeviceStatus = (device: DeviceLocation) => {
     const isOnline = device.ol === 1

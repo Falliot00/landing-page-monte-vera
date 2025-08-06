@@ -2,9 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { MapPin, Bus, RefreshCw, Play, Pause } from 'lucide-react'
+import { MapPin, Bus } from 'lucide-react'
 
 // Importar el mapa completamente dinámico sin SSR
 const RealTimeMapComponent = dynamic(

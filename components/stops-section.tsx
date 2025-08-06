@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { paradas as allParadasData, configuracion } from '@/lib/data'
 import DynamicStopsMap from '@/components/dynamic-stops-map'
 
@@ -46,7 +46,14 @@ export default function StopsSection() {
 
   // Function to group and filter stops by route and then by locality
   const getGroupedStopsByRouteAndLocality = () => {
-    const grouped: { [routeId: string]: { [locality: string]: any[] } } = {};
+    const grouped: { [routeId: string]: { [locality: string]: Array<{
+      id: string
+      nombre: string
+      coordenadas: { lat: number; lng: number }
+      tiempoDesdeInicio: string
+      localidad: string
+      referencias?: string[]
+    }> } } = {};
 
     for (const routeId of Object.keys(allParadasData) as Array<keyof typeof allParadasData>) {
       const stopsForRoute = allParadasData[routeId];
@@ -61,7 +68,14 @@ export default function StopsSection() {
         return matchesSearch && matchesLocalityFilter;
       });
 
-      const localitiesInRoute: { [locality: string]: any[] } = {};
+      const localitiesInRoute: { [locality: string]: Array<{
+        id: string
+        nombre: string
+        coordenadas: { lat: number; lng: number }
+        tiempoDesdeInicio: string
+        localidad: string
+        referencias?: string[]
+      }> } = {};
       filteredStopsForRoute.forEach(stop => {
         if (!localitiesInRoute[stop.localidad]) {
           localitiesInRoute[stop.localidad] = [];
@@ -75,7 +89,14 @@ export default function StopsSection() {
       });
 
       // Sort localities alphabetically for consistent display
-      const sortedLocalitiesInRoute: { [locality: string]: any[] } = {};
+      const sortedLocalitiesInRoute: { [locality: string]: Array<{
+        id: string
+        nombre: string
+        coordenadas: { lat: number; lng: number }
+        tiempoDesdeInicio: string
+        localidad: string
+        referencias?: string[]
+      }> } = {};
       Object.keys(localitiesInRoute).sort().forEach(key => {
         sortedLocalitiesInRoute[key] = localitiesInRoute[key];
       });

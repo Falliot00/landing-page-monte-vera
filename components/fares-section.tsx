@@ -1,6 +1,22 @@
 'use client'
 
 import { useState } from 'react'
+
+interface TarifaMatriz {
+  [origen: string]: {
+    [destino: string]: number
+  }
+}
+
+interface TarifasData {
+  matriz: TarifaMatriz
+}
+
+interface CalculoTarifa {
+  precio: number
+  valido?: boolean
+  mensaje: string
+}
 import { DollarSign, CreditCard, AlertTriangle, CheckCircle } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -12,9 +28,10 @@ export default function FaresSection() {
   const [selectedOrigin, setSelectedOrigin] = useState('')
   const [selectedDestination, setSelectedDestination] = useState('')
 
-  const zonas = Object.keys(tarifas.matriz)
+  const tarifasData: TarifasData = tarifas
+  const zonas = Object.keys(tarifasData.matriz)
 
-  const calcularTarifa = () => {
+  const calcularTarifa = (): CalculoTarifa | null => {
     if (!selectedOrigin || !selectedDestination) return null
     
     if (selectedOrigin === selectedDestination) {
@@ -22,18 +39,18 @@ export default function FaresSection() {
     }
 
     // Verificar si existe la combinación directa
-    if ((tarifas.matriz as any)[selectedOrigin] && (tarifas.matriz as any)[selectedOrigin][selectedDestination]) {
+    if (tarifasData.matriz[selectedOrigin] && tarifasData.matriz[selectedOrigin][selectedDestination]) {
       return {
-        precio: (tarifas.matriz as any)[selectedOrigin][selectedDestination],
+        precio: tarifasData.matriz[selectedOrigin][selectedDestination],
         valido: true,
         mensaje: "Tarifa válida"
       }
     }
 
     // Verificar combinación inversa
-    if ((tarifas.matriz as any)[selectedDestination] && (tarifas.matriz as any)[selectedDestination][selectedOrigin]) {
+    if (tarifasData.matriz[selectedDestination] && tarifasData.matriz[selectedDestination][selectedOrigin]) {
       return {
-        precio: (tarifas.matriz as any)[selectedDestination][selectedOrigin],
+        precio: tarifasData.matriz[selectedDestination][selectedOrigin],
         valido: true,
         mensaje: "Tarifa válida"
       }
@@ -187,7 +204,7 @@ export default function FaresSection() {
                       }
 
                       // Upper triangle (idx_origen < idx_destino)
-                      const precio = (tarifas.matriz as any)[origen]?.[destino];
+                      const precio = tarifasData.matriz[origen]?.[destino];
                       
                       return (
                         <td key={destino} className="border border-gray-300 p-3 text-center">

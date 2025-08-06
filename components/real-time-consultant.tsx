@@ -12,13 +12,32 @@ import { paradas as allParadas, configuracion } from '@/lib/data'
 import DynamicMap from '@/components/dynamic-map'
 import { BusTimingService, type BusArrivalResult } from '@/lib/bus-timing-service'
 
+interface StopData {
+  id: string
+  nombre: string
+  coordenadas: { lat: number; lng: number }
+  tiempoDesdeInicio: string
+  localidad: string
+  referencias?: string[]
+}
+
+// Type guard para verificar si un objeto es StopData
+const isStopData = (obj: unknown): obj is StopData => {
+  return typeof obj === 'object' && 
+         obj !== null && 
+         'id' in obj && 
+         'nombre' in obj && 
+         'coordenadas' in obj &&
+         typeof (obj as Record<string, unknown>).id === 'string'
+}
+
 export default function RealTimeConsultant() {
   const [selectedRoute, setSelectedRoute] = useState('santafe_montevera')
   const [selectedStop, setSelectedStop] = useState('')
   const [isLoadingLocation, setIsLoadingLocation] = useState(false)
   const [isLoadingGPS, setIsLoadingGPS] = useState(false)
   const [busArrivalResult, setBusArrivalResult] = useState<BusArrivalResult | null>(null)
-  const [nearestStop, setNearestStop] = useState<any>(null)
+  const [nearestStop, setNearestStop] = useState<StopData | null>(null)
   const [error, setError] = useState<string | null>(null)
 
 
@@ -32,8 +51,8 @@ export default function RealTimeConsultant() {
           const { latitude, longitude } = position.coords
           
           // Encontrar parada más cercana
-          const allStopsArray = Object.values(allParadas).flat()
-          let closest: any = null
+          const allStopsArray = Object.values(allParadas).flat().filter(isStopData)
+          let closest: StopData | null = null
           let minDistance = Infinity
           
           allStopsArray.forEach(stop => {
@@ -48,7 +67,8 @@ export default function RealTimeConsultant() {
           
           if (closest) {
             setNearestStop(closest)
-            setSelectedStop(closest.id)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            setSelectedStop((closest as any).id)
           }
           
           setIsLoadingLocation(false)
@@ -86,12 +106,13 @@ export default function RealTimeConsultant() {
     }, 1500)
   }
 
-  const getParadasForRoute = (routeId: string) => {
-    return allParadas[routeId as keyof typeof allParadas] || [];
+  const getParadasForRoute = (routeId: string): StopData[] => {
+    const stops = allParadas[routeId as keyof typeof allParadas] || [];
+    return stops.filter(isStopData);
   };
 
   const getGroupedParadas = () => {
-    const grouped: { [key: string]: any[] } = {};
+    const grouped: { [key: string]: StopData[] } = {};
     const stopsForSelectedRoute = getParadasForRoute(selectedRoute);
 
     stopsForSelectedRoute.forEach(stop => {
