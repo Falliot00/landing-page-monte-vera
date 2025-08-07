@@ -6,7 +6,7 @@ import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { MapPin, Bus, RefreshCw, Play, Pause, Navigation } from 'lucide-react'
+import { MapPin, Bus, Navigation } from 'lucide-react'
 import { gpsService } from '@/lib/gps-service'
 import { configuracion } from '@/lib/data'
 import coordenadasSFMV from '@/lib/coordenadas_recorrido_santa_fe_monte_vera.json'
@@ -30,7 +30,7 @@ interface DeviceLocation {
 export default function MapComponent() {
   const [deviceLocations, setDeviceLocations] = useState<DeviceLocation[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const [isPolling, setIsPolling] = useState(true)
+  const isPolling = true // Always polling
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [pollingInterval, setPollingInterval] = useState<NodeJS.Timeout | null>(null)
@@ -119,15 +119,6 @@ export default function MapComponent() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPolling])
-
-  const togglePolling = () => {
-    setIsPolling(!isPolling)
-  }
-
-  const manualRefresh = () => {
-    setIsLoading(true)
-    fetchDeviceLocations()
-  }
 
   // Función para obtener ubicación del usuario
   const getUserLocation = () => {
@@ -261,16 +252,6 @@ export default function MapComponent() {
     return 'Parado'
   }
 
-  // Función para convertir grados a dirección cardinal
-  const getCardinalDirection = (degrees: number) => {
-    const directions = [
-      'N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE',
-      'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'
-    ]
-    const index = Math.round(degrees / 22.5) % 16
-    return directions[index]
-  }
-
   // Función para crear icono rotado según la dirección del vehículo
   const createRotatedBusIcon = (direction: number = 0, iconType: 'moving' | 'stopped' | 'offline') => {
     if (!icons) return null
@@ -312,7 +293,7 @@ export default function MapComponent() {
     const encodedSvg = encodeURIComponent(rotatedSvg)
     const dataUrl = `data:image/svg+xml,${encodedSvg}`
     
-    return new (window as any).L.Icon({
+    return new (window as Window & typeof globalThis & { L: typeof L }).L.Icon({
       iconUrl: dataUrl,
       iconSize: [32, 32],
       iconAnchor: [16, 16],
