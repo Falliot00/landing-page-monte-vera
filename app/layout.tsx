@@ -175,16 +175,14 @@ export default function RootLayout({
               },
               "knowsAbout": ["Transporte público", "GPS tiempo real", "Horarios de colectivos"],
               "sameAs": [
-                "https://facebook.com/MonteVeraExpress",
-                "https://twitter.com/MonteVeraExpress",
-                "https://instagram.com/MonteVeraExpress"
+                "https://www.facebook.com/profile.php?id=100057168711212",
               ]
             })
           }}
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased pt-[3.5rem] md:pt-16`}
       >
         {children}
       </body>

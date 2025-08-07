@@ -52,7 +52,6 @@ export default function StopsSection() {
       coordenadas: { lat: number; lng: number }
       tiempoDesdeInicio: string
       localidad: string
-      referencias?: string[]
     }> } } = {};
 
     for (const routeId of Object.keys(allParadasData) as Array<keyof typeof allParadasData>) {
@@ -60,7 +59,6 @@ export default function StopsSection() {
       const filteredStopsForRoute = stopsForRoute.filter(stop => {
         const matchesSearch = searchTerm === '' ||
           stop.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          (stop.referencias ?? []).some((ref: string) => ref.toLowerCase().includes(searchTerm.toLowerCase())) ||
           stop.id.toLowerCase().includes(searchTerm.toLowerCase());
         
         const matchesLocalityFilter = selectedLocality === 'all' || stop.localidad === selectedLocality;
@@ -152,7 +150,7 @@ export default function StopsSection() {
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
               <Input
-                placeholder="Buscar por nombre, código o referencia..."
+                placeholder="Buscar por nombre o código..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full"
@@ -259,9 +257,6 @@ export default function StopsSection() {
                                     <div className="font-medium text-gray-900 text-sm">
                                       {stop.id} - {stop.nombre}
                                     </div>
-                                    {stop.referencias && stop.referencias.length > 0 && (
-                                      <span className="text-xs text-gray-500">({(stop.referencias ?? []).join(', ')})</span>
-                                    )}
                                   </div>
                                   <Button 
                                     variant="ghost" 
@@ -297,28 +292,34 @@ export default function StopsSection() {
       <DynamicStopsMap />
 
       {/* Información Adicional */}
-      <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="bg-blue-50 border-blue-200">
-          <CardContent className="p-6 text-center">
-            <MapPin className="h-8 w-8 text-blue-600 mx-auto mb-3" />
-            <h3 className="font-semibold text-blue-900 mb-2">Paradas Principales</h3>
-            <p className="text-sm text-blue-800">Terminal Santa Fe y Galpón Monte Vera</p>
+      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <Card className="bg-gradient-to-br from-blue-50 to-blue-100/50 border-blue-200 transform hover:scale-105 transition-all duration-300 hover:shadow-lg">
+          <CardContent className="p-8 text-center">
+            <div className="inline-flex p-3 bg-blue-100 rounded-xl mb-4">
+              <MapPin className="h-8 w-8 text-blue-600" />
+            </div>
+            <h3 className="font-semibold text-blue-900 mb-3 text-lg">Paradas Principales</h3>
+            <p className="text-sm text-blue-800 leading-relaxed">Terminal Santa Fe y Galpón Monte Vera</p>
           </CardContent>
         </Card>
 
-        <Card className="bg-green-50 border-green-200">
-          <CardContent className="p-6 text-center">
-            <Navigation className="h-8 w-8 text-green-600 mx-auto mb-3" />
-            <h3 className="font-semibold text-green-900 mb-2">Accesibilidad</h3>
-            <p className="text-sm text-green-800">65% de paradas con acceso para personas con movilidad reducida</p>
+        <Card className="bg-gradient-to-br from-green-50 to-green-100/50 border-green-200 transform hover:scale-105 transition-all duration-300 hover:shadow-lg">
+          <CardContent className="p-8 text-center">
+            <div className="inline-flex p-3 bg-green-100 rounded-xl mb-4">
+              <Navigation className="h-8 w-8 text-green-600" />
+            </div>
+            <h3 className="font-semibold text-green-900 mb-3 text-lg">Accesibilidad</h3>
+            <p className="text-sm text-green-800 leading-relaxed">65% de paradas con acceso para personas con movilidad reducida</p>
           </CardContent>
         </Card>
 
-        <Card className="bg-orange-50 border-orange-200">
-          <CardContent className="p-6 text-center">
-            <Clock className="h-8 w-8 text-orange-600 mx-auto mb-3" />
-            <h3 className="font-semibold text-orange-900 mb-2">Tiempo entre Paradas</h3>
-            <p className="text-sm text-orange-800">Promedio de 1-2 minutos entre paradas consecutivas</p>
+        <Card className="bg-gradient-to-br from-orange-50 to-orange-100/50 border-orange-200 transform hover:scale-105 transition-all duration-300 hover:shadow-lg">
+          <CardContent className="p-8 text-center">
+            <div className="inline-flex p-3 bg-orange-100 rounded-xl mb-4">
+              <Clock className="h-8 w-8 text-orange-600" />
+            </div>
+            <h3 className="font-semibold text-orange-900 mb-3 text-lg">Tiempo entre Paradas</h3>
+            <p className="text-sm text-orange-800 leading-relaxed">Promedio de 1-2 minutos entre paradas consecutivas</p>
           </CardContent>
         </Card>
       </div>

@@ -128,15 +128,26 @@ export default function ContactSection() {
             </CardHeader>
             <CardContent>
               <div className="flex space-x-4">
-                <Button variant="outline" size="sm" className="flex-1">
-                  Facebook
-                </Button>
-                <Button variant="outline" size="sm" className="flex-1">
-                  Instagram
-                </Button>
-                <Button variant="outline" size="sm" className="flex-1">
-                  WhatsApp
-                </Button>
+                <a 
+                  href="https://www.facebook.com/profile.php?id=100057168711212" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="flex-1"
+                >
+                  <Button variant="outline" size="sm" className="w-full">
+                    Facebook
+                  </Button>
+                </a>
+                <a 
+                  href="https://www.whatsapp.com/channel/0029Vau6xc823n3jemqpdd31" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="flex-1"
+                >
+                  <Button variant="outline" size="sm" className="w-full">
+                    WhatsApp
+                  </Button>
+                </a>
               </div>
               <p className="text-sm text-green-800 mt-3">
                 Mantente informado sobre horarios, novedades y actualizaciones del servicio.

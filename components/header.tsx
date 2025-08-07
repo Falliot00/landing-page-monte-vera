@@ -13,7 +13,6 @@ interface HeaderProps {
 
 export default function Header({ activeSection }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
 
   const menuItems = [
@@ -25,15 +24,6 @@ export default function Header({ activeSection }: HeaderProps) {
     { id: 'paradas', label: 'Paradas', href: '/#paradas' },
     { id: 'contacto', label: 'Contacto', href: '/#contacto' }
   ]
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   const handleNavigation = (item: { id: string; href: string }) => {
     setIsMenuOpen(false)
@@ -62,36 +52,42 @@ export default function Header({ activeSection }: HeaderProps) {
   }
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white shadow-lg' : 'bg-white/95 backdrop-blur-sm'
-    }`}>
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-white/95 backdrop-blur-sm shadow-sm h-[3.5rem] md:h-16">
+      <div className="container mx-auto px-4 lg:px-8 h-full">
+        <div className="flex items-center justify-between h-full">
           {/* Logo */}
-          <div className="flex items-center space-x-3">
-            <Image
-              src="/imagenes/LogoMV.png"
-              alt="Monte Vera Logo"
-              width={240}
-              height={80}
-              className="h-10 w-auto"
-              quality={100}
-              priority
-            />
+          <div className="flex items-center space-x-3 flex-shrink-0">
+            <Link href="/" className="transition-transform duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 rounded-lg">
+              <Image
+                src="/imagenes/LogoMV.png"
+                alt="Monte Vera Logo"
+                width={240}
+                height={80}
+                className="h-7 sm:h-8 md:h-10 w-auto"
+                quality={100}
+                priority
+              />
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
             {menuItems.map((item) => (
               <Link
                 key={item.id}
                 href={item.href}
                 onClick={() => handleNavigation(item)}
-                className={`text-sm font-medium transition-colors hover:text-green-600 ${
-                  isActiveItem(item) ? 'text-green-600' : 'text-gray-700'
+                className={`relative px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-green-50 group ${
+                  isActiveItem(item) 
+                    ? 'text-green-600 bg-green-50' 
+                    : 'text-gray-700 hover:text-green-600'
                 }`}
               >
                 {item.label}
+                {isActiveItem(item) && (
+                  <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-green-600 rounded-full"></span>
+                )}
+                <span className="absolute inset-0 rounded-lg bg-green-600/5 scale-0 group-hover:scale-100 transition-transform duration-300"></span>
               </Link>
             ))}
           </nav>
@@ -100,32 +96,61 @@ export default function Header({ activeSection }: HeaderProps) {
           <Button
             variant="ghost"
             size="sm"
-            className="lg:hidden"
+            className={`lg:hidden relative p-2 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${
+              isMenuOpen ? 'bg-green-50 text-green-600' : 'hover:bg-green-50/50'
+            }`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-expanded={isMenuOpen}
+            aria-label="Toggle menu"
           >
-            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            <div className="relative w-6 h-6">
+              <span className={`absolute left-0 w-6 h-0.5 bg-current transition-all duration-300 transform ${
+                isMenuOpen ? 'top-3 rotate-45' : 'top-1.5'
+              }`} />
+              <span className={`absolute top-3 left-0 w-6 h-0.5 bg-current transition-all duration-300 transform ${
+                isMenuOpen ? 'opacity-0 scale-x-0' : 'opacity-100 scale-x-100'
+              }`} />
+              <span className={`absolute left-0 w-6 h-0.5 bg-current transition-all duration-300 transform ${
+                isMenuOpen ? 'top-3 -rotate-45' : 'top-4.5'
+              }`} />
+            </div>
           </Button>
         </div>
 
         {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="lg:hidden border-t bg-white">
-            <nav className="py-4 space-y-2">
-              {menuItems.map((item) => (
+        {/* Mobile Navigation */}
+        <div className={`lg:hidden fixed inset-x-0 top-[3.5rem] md:top-16 transition-all duration-500 ${
+          isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
+        } ${isMenuOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}>
+          <div className="mx-4 border border-gray-100 bg-white/98 backdrop-blur-md rounded-2xl shadow-lg">
+            <nav className="py-4 px-2 space-y-0.5">
+              {menuItems.map((item, index) => (
                 <Link
                   key={item.id}
                   href={item.href}
                   onClick={() => handleNavigation(item)}
-                  className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-50 hover:text-green-600 ${
-                    isActiveItem(item) ? 'text-green-600 bg-green-50' : 'text-gray-700'
+                  className={`block w-full text-left px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 transform ${
+                    isActiveItem(item) 
+                      ? 'text-green-600 bg-green-50/80 translate-x-2 shadow-sm' 
+                      : 'text-gray-700 hover:text-green-600 hover:bg-green-50/60 hover:translate-x-1'
                   }`}
+                  style={{ 
+                    transitionDelay: isMenuOpen ? `${index * 50}ms` : '0ms',
+                    transform: isMenuOpen ? 'translateX(0)' : 'translateX(-8px)',
+                    opacity: isMenuOpen ? '1' : '0'
+                  }}
                 >
-                  {item.label}
+                  <div className="flex items-center space-x-3">
+                    <span className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                      isActiveItem(item) ? 'bg-green-600 scale-100' : 'bg-gray-300 scale-0'
+                    }`}></span>
+                    <span>{item.label}</span>
+                  </div>
                 </Link>
               ))}
             </nav>
           </div>
-        )}
+        </div>
       </div>
     </header>
   )

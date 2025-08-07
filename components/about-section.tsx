@@ -36,17 +36,22 @@ export default function AboutSection() {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         {stats.map((stat, index) => (
-          <Card key={index} className="text-center">
+          <Card 
+            key={index} 
+            className="text-center transform hover:scale-105 transition-all duration-300 hover:shadow-lg"
+          >
             <CardContent className="p-6">
-              <div className="flex justify-center mb-4">
-                {stat.icon}
+              <div className="flex justify-center mb-4 group transition-transform duration-300 transform hover:scale-110">
+                <div className="p-3 rounded-full bg-green-50 group-hover:bg-green-100 transition-colors duration-300">
+                  {stat.icon}
+                </div>
               </div>
-              <div className="text-2xl font-bold text-gray-900 mb-2">
+              <div className="text-3xl font-bold text-gray-900 mb-2">
                 {stat.number}
               </div>
-              <div className="text-sm text-gray-600">
+              <div className="text-sm text-gray-600 font-medium">
                 {stat.label}
               </div>
             </CardContent>

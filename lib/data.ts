@@ -104,32 +104,28 @@ export const paradas = {
       nombre: "TERMINAL SANTA FE",
       coordenadas: { lat: -31.6442377, lng: -60.70065952 },
       tiempoDesdeInicio: "00:00:00",
-      localidad: "Santa Fe",
-      referencias: ["Terminal de Ómnibus", "Centro"]
+      localidad: "Santa Fe"
     },
     {
       id: "MV01",
       nombre: "LA RIOJA Y RIVADAVIA",
       coordenadas: { lat: -31.646189, lng: -60.703943 },
       tiempoDesdeInicio: "00:03:00",
-      localidad: "Santa Fe",
-      referencias: ["Centro histórico", "Peatonal"]
+      localidad: "Santa Fe"
     },
     {
       id: "MV02",
       nombre: "RIVADAVIA Y H. YRIGOYEN",
       coordenadas: { lat: -31.642883, lng: -60.703108 },
       tiempoDesdeInicio: "00:04:00",
-      localidad: "Santa Fe",
-      referencias: ["Centro"]
+      localidad: "Santa Fe"
     },
     {
       id: "MV03",
       nombre: "RIVADAVIA Y SUIPACHA",
       coordenadas: { lat: -31.64078, lng: -60.702403 },
       tiempoDesdeInicio: "00:05:00",
-      localidad: "Santa Fe",
-      referencias: ["Centro"]
+      localidad: "Santa Fe"
     },
     {
       id: "MV04",
@@ -304,8 +300,7 @@ export const paradas = {
       nombre: "A. DEL VALLE FRENTE CLUB BANCO PROVINCIA",
       coordenadas: { lat: -31.57452298, lng: -60.69021778 },
       tiempoDesdeInicio: "00:31:00",
-      localidad: "Espora",
-      referencias: ["Club Banco Provincia"]
+      localidad: "Espora"
     },
     {
       id: "MV29",
@@ -326,40 +321,35 @@ export const paradas = {
       nombre: "A. DEL VALLE Y RUTA 2",
       coordenadas: { lat: -31.55498602, lng: -60.68633093 },
       tiempoDesdeInicio: "00:35:00",
-      localidad: "A. Gallardo",
-      referencias: ["Acceso Ruta 2"]
+      localidad: "A. Gallardo"
     },
     {
       id: "MV32",
       nombre: "ROTONDA ÁNGEL GALLARDO",
       coordenadas: { lat: -31.55534699, lng: -60.67938257 },
       tiempoDesdeInicio: "00:37:00",
-      localidad: "A. Gallardo",
-      referencias: ["Rotonda principal"]
+      localidad: "A. Gallardo"
     },
     {
       id: "MV33",
       nombre: "RUTA 2 Y CEMENTERIO LAR DE PAZ",
       coordenadas: { lat: -31.54796032, lng: -60.69119829 },
       tiempoDesdeInicio: "00:42:00",
-      localidad: "A. Mirta",
-      referencias: ["Cementerio Lar de Paz"]
+      localidad: "A. Mirta"
     },
     {
       id: "MV34",
       nombre: "RUTA 2 Y RUTA 5",
       coordenadas: { lat: -31.53992705, lng: -60.6884873 },
       tiempoDesdeInicio: "00:43:00",
-      localidad: "A. Mirta",
-      referencias: ["Cruce de rutas"]
+      localidad: "A. Mirta"
     },
     {
       id: "MV35",
       nombre: "ESTACIÓN DE SERVICIO PUMA",
       coordenadas: { lat: -31.52788229, lng: -60.68457796 },
       tiempoDesdeInicio: "00:45:00",
-      localidad: "Monte Vera",
-      referencias: ["Estación de servicio"]
+      localidad: "Monte Vera"
     },
     {
       id: "MV36",
@@ -450,8 +440,7 @@ export const paradas = {
       nombre: "GALPÓN EMP. MONTE VERA",
       coordenadas: { lat: -31.50918773, lng: -60.67810577 },
       tiempoDesdeInicio: "00:55:00",
-      localidad: "Monte Vera",
-      referencias: ["Terminal Monte Vera", "Fin de recorrido"]
+      localidad: "Monte Vera"
     }
   ],
   montevera_santafe: [
@@ -460,8 +449,7 @@ export const paradas = {
       nombre: "GALPÓN EMP. MONTE VERA",
       coordenadas: { lat: -31.50918773, lng: -60.67810577 },
       tiempoDesdeInicio: "00:00:00",
-      localidad: "Monte Vera",
-      referencias: ["Terminal Monte Vera", "Inicio de recorrido"]
+      localidad: "Monte Vera"
     },
     {
       id: "MV50",
@@ -552,40 +540,35 @@ export const paradas = {
       nombre: "ESTACIÓN DE SERVICIO PUMA",
       coordenadas: { lat: -31.52715057, lng: -60.68450002 },
       tiempoDesdeInicio: "00:16:00",
-      localidad: "Monte Vera",
-      referencias: ["Estación de servicio"]
+      localidad: "Monte Vera"
     },
     {
       id: "MV63",
       nombre: "RUTA 2 Y RUTA 5",
       coordenadas: { lat: -31.54032387, lng: -60.68884276 },
       tiempoDesdeInicio: "00:17:00",
-      localidad: "A. Mirta",
-      referencias: ["Cruce de rutas"]
+      localidad: "A. Mirta"
     },
     {
       id: "MV64",
       nombre: "RUTA 2 Y CEMENTERIO LAR DE PAZ",
       coordenadas: { lat: -31.54784427, lng: -60.69130503 },
       tiempoDesdeInicio: "00:19:00",
-      localidad: "A. Mirta",
-      referencias: ["Cementerio Lar de Paz"]
+      localidad: "A. Mirta"
     },
     {
       id: "MV65",
       nombre: "ROTONDA ÁNGEL GALLARDO",
       coordenadas: { lat: -31.55531848, lng: -60.67940531 },
       tiempoDesdeInicio: "00:24:00",
-      localidad: "A. Gallardo",
-      referencias: ["Rotonda principal"]
+      localidad: "A. Gallardo"
     },
     {
       id: "MV66",
       nombre: "A. DEL VALLE Y RUTA 2",
       coordenadas: { lat: -31.55497461, lng: -60.68662823 },
       tiempoDesdeInicio: "00:27:00",
-      localidad: "A. Gallardo",
-      referencias: ["Acceso Ruta 2"]
+      localidad: "A. Gallardo"
     },
     {
       id: "MV67",
@@ -606,8 +589,7 @@ export const paradas = {
       nombre: "A. DEL VALLE FRENTE CLUB BANCO PROVINCIA",
       coordenadas: { lat: -31.5734713, lng: -60.69045662 },
       tiempoDesdeInicio: "00:30:00",
-      localidad: "Espora",
-      referencias: ["Club Banco Provincia"]
+      localidad: "Espora"
     },
     {
       id: "MV70",
@@ -803,8 +785,7 @@ export const paradas = {
       nombre: "TERMINAL SANTA FE",
       coordenadas: { lat: -31.6442377, lng: -60.70065952 },
       tiempoDesdeInicio: "00:55:00",
-      localidad: "Santa Fe",
-      referencias: ["Terminal de Ómnibus", "Centro", "Fin de recorrido"]
+      localidad: "Santa Fe"
     }
   ],
 };

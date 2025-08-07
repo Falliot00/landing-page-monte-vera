@@ -170,11 +170,6 @@ export default function StopsMap() {
                       </h3>
                       <p className="text-xs text-gray-600 mb-1">{routeName}</p>
                       <p className="text-xs text-gray-600">Localidad: {stop.localidad}</p>
-                      {stop.referencias && stop.referencias.length > 0 && (
-                        <p className="text-xs text-gray-500 mt-1">
-                          Referencias: {stop.referencias.join(', ')}
-                        </p>
-                      )}
                     </div>
                   </Popup>
                 </Marker>

@@ -104,8 +104,8 @@ export default function MapComponent() {
       // Fetch inicial
       fetchDeviceLocations()
       
-      // Configurar polling cada 30 segundos
-      const interval = setInterval(fetchDeviceLocations, 30000)
+      // Configurar polling cada 10 segundos
+      const interval = setInterval(fetchDeviceLocations, 10000)
       setPollingInterval(interval)
       
       return () => {
@@ -332,7 +332,7 @@ export default function MapComponent() {
             <span>Mapa en Tiempo Real</span>
           </CardTitle>
           <div className="flex items-center space-x-2">
-            <Button
+            {/*<Button
               variant="outline"
               size="sm"
               onClick={manualRefresh}
@@ -340,7 +340,7 @@ export default function MapComponent() {
             >
               <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
               Actualizar
-            </Button>
+            </Button>*/}
             <Button
               variant={isTrackingLocation ? "default" : "outline"}
               size="sm"
@@ -348,23 +348,6 @@ export default function MapComponent() {
             >
               <Navigation className={`h-4 w-4 mr-2 ${isTrackingLocation ? 'text-blue-600' : ''}`} />
               {isTrackingLocation ? 'Ocultar ubicación' : 'Mi ubicación'}
-            </Button>
-            <Button
-              variant={isPolling ? "destructive" : "default"}
-              size="sm"
-              onClick={togglePolling}
-            >
-              {isPolling ? (
-                <>
-                  <Pause className="h-4 w-4 mr-2" />
-                  Pausar
-                </>
-              ) : (
-                <>
-                  <Play className="h-4 w-4 mr-2" />
-                  Reanudar
-                </>
-              )}
             </Button>
           </div>
         </div>
@@ -381,9 +364,6 @@ export default function MapComponent() {
                 📍 Ubicación activa
               </Badge>
             )}
-            <Badge variant="outline" className="text-gray-600 border-gray-300">
-              📡 Filtro GPS activo
-            </Badge>
           </div>
           <div className="flex items-center space-x-2">
             {locationError && (

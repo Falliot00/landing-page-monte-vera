@@ -73,15 +73,17 @@ export default function FaresSection() {
       </div>
 
       {/* Calculadora de Tarifas */}
-      <Card className="mb-8 max-w-2xl mx-auto">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <DollarSign className="h-5 w-5 text-green-600" />
-            <span>Calculadora de Tarifas</span>
+      <Card className="mb-8 max-w-2xl mx-auto transform hover:shadow-xl transition-all duration-300">
+        <CardHeader className="border-b border-gray-100">
+          <CardTitle className="flex items-center space-x-3">
+            <div className="p-2 bg-green-50 rounded-lg">
+              <DollarSign className="h-6 w-6 text-green-600" />
+            </div>
+            <span className="text-xl">Calculadora de Tarifas</span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <CardContent className="space-y-6 pt-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Zona de Origen

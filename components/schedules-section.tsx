@@ -134,18 +134,18 @@ export default function SchedulesSection() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3">
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 md:gap-3">
                 {currentSchedule.laborables.horarios.map((time, index) => {
                   const status = getTimeStatus(time)
                   return (
                     <div
                       key={index}
-                      className={`p-3 rounded-lg text-center font-mono text-sm border ${
+                      className={`p-2 md:p-3 rounded-lg text-center font-mono text-sm border transition-all duration-300 transform hover:scale-105 ${
                         status === 'passed'
-                          ? 'bg-gray-100 text-gray-400 border-gray-200'
+                          ? 'bg-gray-50 text-gray-400 border-gray-200'
                           : status === 'soon'
-                          ? 'bg-green-100 text-green-800 border-green-300 font-semibold'
-                          : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                          ? 'bg-green-50 text-green-800 border-green-300 font-semibold shadow-sm hover:shadow-md'
+                          : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50 hover:border-green-300'
                       }`}
                     >
                       {time}

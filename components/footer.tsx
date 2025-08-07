@@ -1,4 +1,4 @@
-import { MapPin, Phone, Mail, Clock } from 'lucide-react'
+import { MapPin, Phone, Mail, Clock, Facebook, MessageCircleMore } from 'lucide-react'
 import Image from 'next/image'
 
 export default function Footer() {
@@ -26,15 +26,22 @@ export default function Footer() {
               público confiable, moderno y accesible para toda la comunidad.
             </p>
             <div className="flex space-x-4">
-              <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center hover:bg-green-700 cursor-pointer transition-colors">
-                <span className="text-xs font-bold">f</span>
-              </div>
-              <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center hover:bg-green-700 cursor-pointer transition-colors">
-                <span className="text-xs font-bold">ig</span>
-              </div>
-              <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center hover:bg-green-700 cursor-pointer transition-colors">
-                <span className="text-xs font-bold">wa</span>
-              </div>
+              <a
+                href="https://www.facebook.com/profile.php?id=100057168711212"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center hover:bg-green-700 transition-colors"
+              >
+                <Facebook className="h-4 w-4" />
+              </a>
+              <a
+                href="https://www.whatsapp.com/channel/0029Vau6xc823n3jemqpdd31"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center hover:bg-green-700 transition-colors"
+              >
+                <MessageCircleMore className="h-4 w-4" />
+              </a>
             </div>
           </div>
 
