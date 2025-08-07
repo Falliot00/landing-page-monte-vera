@@ -51,8 +51,8 @@ export default function ContactSection() {
     {
       icon: <Phone className="h-5 w-5" />,
       title: "Teléfono",
-      content: "(0342) 456-7890",
-      description: "Lunes a Viernes 8:00 - 18:00"
+      content: "0342 412-3345",
+      description: "Lunes a Viernes 8:00 - 12:00"
     },
     {
       icon: <Mail className="h-5 w-5" />,
@@ -63,14 +63,14 @@ export default function ContactSection() {
     {
       icon: <MapPin className="h-5 w-5" />,
       title: "Oficinas",
-      content: "Terminal Santa Fe",
-      description: "Av. Freyre 2570, Santa Fe"
+      content: "Esquina Belgrano y Eva Peron",
+      description: "Belgrano 2705, Santa Fe, Argentina"
     },
     {
       icon: <Clock className="h-5 w-5" />,
       title: "Atención al Cliente",
-      content: "Lunes a Sábado",
-      description: "8:00 - 18:00 hs"
+      content: "Lunes a Viernes",
+      description: "10:00 - 12:00 hs"
     }
   ]
 

@@ -5,6 +5,8 @@ let busStopIcon: Icon | null = null;
 let busMovingIcon: Icon | null = null;
 let busStoppedIcon: Icon | null = null;
 let busOfflineIcon: Icon | null = null;
+let selectedStopIcon: Icon | null = null;
+let userLocationIcon: Icon | null = null;
 
 if (typeof window !== 'undefined') {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -20,9 +22,9 @@ if (typeof window !== 'undefined') {
       shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
     });
 
-    // Icono para paradas de colectivo
+    // Icono para paradas de colectivo (no usado actualmente, pero disponible)
     busStopIcon = new L.Icon({
-      iconUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IiMzQjgyRjYiLz4KPHN2ZyB4PSI3IiB5PSI3IiB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMgMTJoMThtLTktOWw5IDktOS05eiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cjwvc3ZnPgo=',
+      iconUrl: '/icons/map/bus-stopped.svg',
       iconSize: [25, 25],
       iconAnchor: [12, 12],
       popupAnchor: [0, -12],
@@ -30,28 +32,44 @@ if (typeof window !== 'undefined') {
 
     // Icono para colectivo en movimiento
     busMovingIcon = new L.Icon({
-      iconUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IiMxNkE4NEYiLz4KPHN2ZyB4PSI2IiB5PSI2IiB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0zIDEyaDE4bS05LTlsOSA5LTkgOXoiLz4KPC9zdmc+Cjwvc3ZnPgo=',
+      iconUrl: '/icons/map/bus-moving.svg',
+      iconSize: [32, 32],
+      iconAnchor: [16, 16],
+      popupAnchor: [0, -16],
+    });
+
+    // Icono para colectivo parado
+    busStoppedIcon = new L.Icon({
+      iconUrl: '/icons/map/bus-stopped.svg',
       iconSize: [30, 30],
       iconAnchor: [15, 15],
       popupAnchor: [0, -15],
     });
 
-    // Icono para colectivo parado
-    busStoppedIcon = new L.Icon({
-      iconUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IiNGNTlFMEIiLz4KPHN2ZyB4PSI2IiB5PSI2IiB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0zIDEyaDEybS05LTlsOSA5LTkgOXoiLz4KPC9zdmc+Cjwvc3ZnPgo=',
-      iconSize: [28, 28],
-      iconAnchor: [14, 14],
-      popupAnchor: [0, -14],
-    });
-
     // Icono para colectivo desconectado
     busOfflineIcon = new L.Icon({
-      iconUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IiNFRjQ0NDQiLz4KPHN2ZyB4PSI2IiB5PSI2IiB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Im0xOCAxOC02LTZWNmw2IDZ2NloiLz4KPC9zdmc+Cjwvc3ZnPgo=',
+      iconUrl: '/icons/map/bus-offline.svg',
       iconSize: [26, 26],
       iconAnchor: [13, 13],
       popupAnchor: [0, -13],
     });
+
+    // Icono para parada seleccionada
+    selectedStopIcon = new L.Icon({
+      iconUrl: '/icons/map/selected-stop.svg',
+      iconSize: [36, 36],
+      iconAnchor: [18, 18],
+      popupAnchor: [0, -18],
+    });
+
+    // Icono para ubicación del usuario
+    userLocationIcon = new L.Icon({
+      iconUrl: '/icons/map/user-location.svg',
+      iconSize: [24, 24],
+      iconAnchor: [12, 12],
+      popupAnchor: [0, -12],
+    });
   }
 }
 
-export { L, busStopIcon, busMovingIcon, busStoppedIcon, busOfflineIcon };
+export { L, busStopIcon, busMovingIcon, busStoppedIcon, busOfflineIcon, selectedStopIcon, userLocationIcon };

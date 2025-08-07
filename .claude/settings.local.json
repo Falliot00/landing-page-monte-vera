@@ -4,7 +4,10 @@
       "mcp__ide__getDiagnostics",
       "Bash(npm install:*)",
       "Bash(del \"components\\real-time-map.tsx\")",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(mkdir:*)",
+      "Bash(move:*)",
+      "Bash(mv:*)"
     ],
     "deny": []
   }

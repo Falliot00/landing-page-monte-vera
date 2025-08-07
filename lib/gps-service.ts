@@ -8,6 +8,8 @@ interface DeviceLocation {
   gt: string;
   sp: number;
   ol: number;
+  hx?: number; // Dirección en grados (0-360), 0 = Norte
+  pk?: number; // Tiempo en segundos, si > 100 no mostrar
 }
 
 interface GPSResponse {
@@ -58,7 +60,9 @@ export class GPSService {
           ps: device.ps,
           gt: device.gt,
           sp: device.sp || 0,
-          ol: device.ol
+          ol: device.ol,
+          hx: device.hx, // Dirección en grados
+          pk: device.pk  // Tiempo en segundos
         };
       }
       

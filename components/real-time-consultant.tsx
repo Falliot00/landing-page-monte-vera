@@ -11,6 +11,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { paradas as allParadas, configuracion } from '@/lib/data'
 import DynamicMap from '@/components/dynamic-map'
 import { BusTimingService, type BusArrivalResult } from '@/lib/bus-timing-service'
+import { useStopSelection } from '@/contexts/stop-selection-context'
 
 interface StopData {
   id: string
@@ -39,6 +40,7 @@ export default function RealTimeConsultant() {
   const [busArrivalResult, setBusArrivalResult] = useState<BusArrivalResult | null>(null)
   const [nearestStop, setNearestStop] = useState<StopData | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const { setSelectedStop: setSelectedStopInMap } = useStopSelection()
 
 
   // Detectar ubicación del usuario
@@ -69,6 +71,7 @@ export default function RealTimeConsultant() {
             setNearestStop(closest)
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             setSelectedStop((closest as any).id)
+            setSelectedStopInMap(closest)
           }
           
           setIsLoadingLocation(false)
@@ -199,7 +202,17 @@ export default function RealTimeConsultant() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Seleccionar Parada
               </label>
-              <Select value={selectedStop} onValueChange={setSelectedStop}>
+              <Select value={selectedStop} onValueChange={(value) => {
+                setSelectedStop(value)
+                // Encontrar la parada completa y pasarla al contexto
+                const allStopsArray = Object.values(allParadas).flat().filter(isStopData)
+                const foundStop = allStopsArray.find(stop => stop.id === value)
+                if (foundStop) {
+                  setSelectedStopInMap(foundStop)
+                } else {
+                  setSelectedStopInMap(null)
+                }
+              }}>
                 <SelectTrigger>
                   <SelectValue placeholder="Elegir parada..." />
                 </SelectTrigger>

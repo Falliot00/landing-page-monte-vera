@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+  <!-- Fondo circular blanco con borde rojo para máxima visibilidad -->
+  <circle cx="18" cy="18" r="17" fill="#FFFFFF" stroke="#DC2626" stroke-width="2"/>
+  
+  <!-- Icono flag simplificado y más visible -->
+  <g transform="translate(6, 6)">
+    <!-- Mástil de la bandera -->
+    <line x1="4" y1="2" x2="4" y2="22" stroke="#DC2626" stroke-width="2" stroke-linecap="round"/>
+    
+    <!-- Bandera -->
+    <path d="M4 2 L18 6 L4 10 Z" fill="#DC2626"/>
+    
+    <!-- Sombra de la bandera para profundidad -->
+    <path d="M4 10 L18 6 L16 8 L4 12 Z" fill="#B91C1C" opacity="0.6"/>
+  </g>
+  
+  <!-- Anillo exterior para destacar más -->
+  <circle cx="18" cy="18" r="17" fill="none" stroke="#DC2626" stroke-width="1" opacity="0.3"/>
+</svg>

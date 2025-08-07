@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
+  <!-- Fondo circular amarillo para colectivo parado -->
+  <circle cx="15" cy="15" r="14" fill="#F59E0B" stroke="#FFFFFF" stroke-width="2"/>
+  
+  <!-- Icono bus-front de Lucide optimizado para mapa -->
+  <g transform="translate(3, 3)" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M4 6 2 7"/>
+    <path d="M10 6h4"/>
+    <path d="m22 7-2-1"/>
+    <rect width="16" height="16" x="4" y="3" rx="2" fill="#FFFFFF" stroke="#F59E0B"/>
+    <path d="M4 11h16" stroke="#F59E0B"/>
+    <circle cx="8" cy="15" r="1" fill="#F59E0B"/>
+    <circle cx="16" cy="15" r="1" fill="#F59E0B"/>
+    <path d="M6 19v2"/>
+    <path d="M18 21v-2"/>
+  </g>
+  
+  <!-- Indicador de parado (líneas de pausa) -->
+  <rect x="25" y="10" width="2" height="10" fill="#FFFFFF" rx="1"/>
+  <rect x="28" y="10" width="2" height="10" fill="#FFFFFF" rx="1"/>
+</svg>

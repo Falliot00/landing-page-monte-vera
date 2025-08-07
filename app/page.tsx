@@ -10,6 +10,7 @@ import FaresSection from '@/components/fares-section'
 import StopsSection from '@/components/stops-section'
 import ContactSection from '@/components/contact-section'
 import Footer from '@/components/footer'
+import { StopSelectionProvider } from '@/contexts/stop-selection-context'
 
 export default function HomePage() {
   const [activeSection, setActiveSection] = useState('inicio')
@@ -36,40 +37,42 @@ export default function HomePage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-white">
-      <Header activeSection={activeSection} />
-      
-      <main>
-        <section id="inicio">
-          <HeroSection />
-        </section>
+    <StopSelectionProvider>
+      <div className="min-h-screen bg-white">
+        <Header activeSection={activeSection} />
         
-        <section id="consultor" className="py-16 bg-gray-50">
-          <RealTimeConsultant />
-        </section>
+        <main>
+          <section id="inicio">
+            <HeroSection />
+          </section>
+          
+          <section id="consultor" className="py-16 bg-gray-50">
+            <RealTimeConsultant />
+          </section>
+          
+          <section id="nosotros" className="py-16">
+            <AboutSection />
+          </section>
+          
+          <section id="horarios" className="py-16 bg-gray-50">
+            <SchedulesSection />
+          </section>
+          
+          <section id="tarifas" className="py-16">
+            <FaresSection />
+          </section>
+          
+          <section id="paradas" className="py-16 bg-gray-50">
+            <StopsSection />
+          </section>
+          
+          <section id="contacto" className="py-16">
+            <ContactSection />
+          </section>
+        </main>
         
-        <section id="nosotros" className="py-16">
-          <AboutSection />
-        </section>
-        
-        <section id="horarios" className="py-16 bg-gray-50">
-          <SchedulesSection />
-        </section>
-        
-        <section id="tarifas" className="py-16">
-          <FaresSection />
-        </section>
-        
-        <section id="paradas" className="py-16 bg-gray-50">
-          <StopsSection />
-        </section>
-        
-        <section id="contacto" className="py-16">
-          <ContactSection />
-        </section>
-      </main>
-      
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </StopSelectionProvider>
   )
 }

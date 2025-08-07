@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 interface HeaderProps {
   activeSection: string
@@ -12,15 +14,16 @@ interface HeaderProps {
 export default function Header({ activeSection }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const pathname = usePathname()
 
   const menuItems = [
-    { id: 'inicio', label: 'Inicio' },
-    { id: 'consultor', label: 'Consultor GPS' },
-    { id: 'nosotros', label: 'Nosotros' },
-    { id: 'horarios', label: 'Horarios' },
-    { id: 'tarifas', label: 'Tarifas' },
-    { id: 'paradas', label: 'Paradas' },
-    { id: 'contacto', label: 'Contacto' }
+    { id: 'inicio', label: 'Inicio', href: '/' },
+    { id: 'consultor', label: 'Consultor GPS', href: '/#consultor' },
+    { id: 'nosotros', label: 'Nosotros', href: '/#nosotros' },
+    { id: 'horarios', label: 'Horarios', href: '/#horarios' },
+    { id: 'tarifas', label: 'Tarifas', href: '/#tarifas' },
+    { id: 'paradas', label: 'Paradas', href: '/#paradas' },
+    { id: 'contacto', label: 'Contacto', href: '/#contacto' }
   ]
 
   useEffect(() => {
@@ -32,12 +35,30 @@ export default function Header({ activeSection }: HeaderProps) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
+  const handleNavigation = (item: { id: string; href: string }) => {
     setIsMenuOpen(false)
+    
+    // Si estamos en la página principal y es una sección con anchor
+    if (pathname === '/' && item.href.startsWith('/#')) {
+      const sectionId = item.href.substring(2) // Remover '/#'
+      const element = document.getElementById(sectionId)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+    // Para otros casos, Next.js manejará la navegación automáticamente
+  }
+
+  const isActiveItem = (item: { id: string; href: string }) => {
+    // Si estamos en la página del consultor GPS, no marcar ningún item como activo en el header
+    if (pathname === '/consultor-gps') {
+      return false
+    }
+    // Si estamos en la página principal, usar activeSection
+    if (pathname === '/' && item.id === activeSection) {
+      return true
+    }
+    return false
   }
 
   return (
@@ -62,15 +83,16 @@ export default function Header({ activeSection }: HeaderProps) {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
             {menuItems.map((item) => (
-              <button
+              <Link
                 key={item.id}
-                onClick={() => scrollToSection(item.id)}
+                href={item.href}
+                onClick={() => handleNavigation(item)}
                 className={`text-sm font-medium transition-colors hover:text-green-600 ${
-                  activeSection === item.id ? 'text-green-600' : 'text-gray-700'
+                  isActiveItem(item) ? 'text-green-600' : 'text-gray-700'
                 }`}
               >
                 {item.label}
-              </button>
+              </Link>
             ))}
           </nav>
 
@@ -90,15 +112,16 @@ export default function Header({ activeSection }: HeaderProps) {
           <div className="lg:hidden border-t bg-white">
             <nav className="py-4 space-y-2">
               {menuItems.map((item) => (
-                <button
+                <Link
                   key={item.id}
-                  onClick={() => scrollToSection(item.id)}
+                  href={item.href}
+                  onClick={() => handleNavigation(item)}
                   className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-50 hover:text-green-600 ${
-                    activeSection === item.id ? 'text-green-600 bg-green-50' : 'text-gray-700'
+                    isActiveItem(item) ? 'text-green-600 bg-green-50' : 'text-gray-700'
                   }`}
                 >
                   {item.label}
-                </button>
+                </Link>
               ))}
             </nav>
           </div>

@@ -82,13 +82,13 @@ export default function Footer() {
               <div className="flex items-center space-x-3">
                 <MapPin className="h-4 w-4 text-green-400 flex-shrink-0" />
                 <span className="text-gray-300 text-sm">
-                  Terminal Santa Fe<br />
-                  Av. Freyre 2570, Santa Fe
+                  Esquina Belgrano y Eva Peron<br />
+                  Belgrano 2705, Santa Fe, Argentina
                 </span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="h-4 w-4 text-green-400 flex-shrink-0" />
-                <span className="text-gray-300 text-sm">(0342) 456-7890</span>
+                <span className="text-gray-300 text-sm">0342 412-3345</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-4 w-4 text-green-400 flex-shrink-0" />
@@ -97,8 +97,7 @@ export default function Footer() {
               <div className="flex items-center space-x-3">
                 <Clock className="h-4 w-4 text-green-400 flex-shrink-0" />
                 <span className="text-gray-300 text-sm">
-                  Lun-Vie: 8:00-18:00<br />
-                  Sáb: 8:00-14:00
+                  Lun-Vie: 10:00-12:00<br />
                 </span>
               </div>
             </div>

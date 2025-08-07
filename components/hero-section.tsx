@@ -3,14 +3,9 @@
 import { ArrowRight, MapPin, Clock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function HeroSection() {
-  const scrollToConsultor = () => {
-    const element = document.getElementById('consultor')
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -52,14 +47,15 @@ export default function HeroSection() {
             </div>
           </div>
 
-          <Button
-            onClick={scrollToConsultor}
-            size="lg"
-            className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-          >
-            Consultar Horarios GPS
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
+          <Link href="/consultor-gps">
+            <Button
+              size="lg"
+              className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+            >
+              Consultar Horarios GPS
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
 
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
