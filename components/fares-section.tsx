@@ -63,11 +63,12 @@ export default function FaresSection() {
 
   return (
     <div className="container mx-auto px-4">
-      <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      <div className="text-center mb-8">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
           Sistema de Tarifas
         </h2>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
           Tarifas por zonas vigentes desde el {tarifas.vigencia}. Pago únicamente con tarjeta SUBE.
         </p>
       </div>
@@ -151,6 +152,40 @@ export default function FaresSection() {
         </CardContent>
       </Card>
 
+      {/* Método de Pago - Prominente */}
+      <div className="mb-8">
+        <Card className="bg-gradient-to-r from-green-50 to-green-100 border-green-200 shadow-lg">
+          <CardContent className="py-6">
+            <div className="flex items-center justify-center space-x-3 mb-6">
+              <div className="p-2 bg-green-600 rounded-full">
+                <CreditCard className="h-6 w-6 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-green-900">Método de Pago</h3>
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-center justify-center space-x-2 mb-4">
+                <CheckCircle className="h-5 w-5 text-green-600" />
+                <span className="font-bold text-green-900">SUBE ÚNICAMENTE</span>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-green-800">
+                <div className="flex items-center space-x-2 justify-center">
+                  <span className="w-2 h-2 bg-green-600 rounded-full flex-shrink-0"></span>
+                  <span>NO se acepta dinero efectivo</span>
+                </div>
+                <div className="flex items-center space-x-2 justify-center">
+                  <span className="w-2 h-2 bg-green-600 rounded-full flex-shrink-0"></span>
+                  <span>Una única tarjeta por pasajero</span>
+                </div>
+                <div className="flex items-center space-x-2 justify-center">
+                  <span className="w-2 h-2 bg-green-600 rounded-full flex-shrink-0"></span>
+                  <span>Se acepta SUBE digital</span>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Tabla de Tarifas Completa */}
       <Card className="mb-8">
         <CardHeader>
@@ -228,54 +263,6 @@ export default function FaresSection() {
         </CardContent>
       </Card>
 
-      {/* Información de Pago */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <Card className="bg-green-50 border-green-200">
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2 text-green-900">
-              <CreditCard className="h-5 w-5" />
-              <span>Método de Pago</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="flex items-center space-x-2">
-                <CheckCircle className="h-5 w-5 text-green-600" />
-                <span className="font-semibold">SUBE ÚNICAMENTE</span>
-              </div>
-              <div className="text-sm text-green-800 space-y-1">
-                <p>• Sistema Único de Boleto Electrónico</p>
-                <p>• NO se acepta efectivo</p>
-                <p>• NO se aceptan otras tarjetas</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-blue-50 border-blue-200">
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2 text-blue-900">
-              <DollarSign className="h-5 w-5" />
-              <span>Rangos de Tarifas</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-sm">Tarifa mínima:</span>
-                <Badge variant="outline">$1.250,00</Badge>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm">Tarifa máxima:</span>
-                <Badge variant="outline">$2.162,00</Badge>
-              </div>
-              <div className="text-xs text-blue-800">
-                Recorrido completo Santa Fe ↔ Monte Vera
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
 
       {/* Puntos de Carga SUBE */}
       <Card className="mb-8">
@@ -308,19 +295,19 @@ export default function FaresSection() {
 
       {/* Alertas y Recomendaciones */}
       <div className="space-y-4">
-        <Alert>
-          <AlertTriangle className="h-4 w-4" />
-          <AlertDescription>
-            <strong>Recomendación:</strong> Verificá que tu tarjeta SUBE tenga saldo suficiente antes de abordar. 
+        <Alert className="bg-gradient-to-r from-yellow-50 to-amber-50 border border-yellow-200 shadow-sm">
+          <AlertTriangle className="h-4 w-4 text-yellow-600" />
+          <AlertDescription className="text-yellow-900">
+            <strong className="text-yellow-800">Recomendación:</strong> Verificá que tu tarjeta SUBE tenga saldo suficiente antes de abordar. 
             Mínimo recomendado: $2.162,00 para recorrido completo.
           </AlertDescription>
         </Alert>
 
-        <Alert>
-          <AlertTriangle className="h-4 w-4" />
-          <AlertDescription>
-            <strong>Política de tarifas:</strong> Las tarifas están reguladas por ordenanza municipal. 
-            Sin descuentos estudiantiles, jubilados o discapacidad. Cada viaje se debita individualmente.
+        <Alert className="bg-gradient-to-r from-yellow-50 to-amber-50 border border-yellow-200 shadow-sm">
+          <AlertTriangle className="h-4 w-4 text-yellow-600" />
+          <AlertDescription className="text-yellow-900">
+            <strong className="text-yellow-800">Política de tarifas:</strong> Las tarifas están reguladas por decreto provincial. 
+            Cada viaje se debita individualmente.
           </AlertDescription>
         </Alert>
       </div>

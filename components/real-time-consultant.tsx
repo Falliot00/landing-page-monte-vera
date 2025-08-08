@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { MapPin, Navigation, Clock, Bus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -41,6 +41,7 @@ export default function RealTimeConsultant() {
   const [nearestStop, setNearestStop] = useState<StopData | null>(null)
   const [error, setError] = useState<string | null>(null)
   const { setSelectedStop: setSelectedStopInMap } = useStopSelection()
+  const horariosCalculadosRef = useRef<HTMLDivElement>(null)
 
 
   // Detectar ubicación del usuario
@@ -100,6 +101,20 @@ export default function RealTimeConsultant() {
         })
         
         setBusArrivalResult(result)
+        
+        // Desplazarse automáticamente a la sección de resultados
+        setTimeout(() => {
+          if (horariosCalculadosRef.current) {
+            const elementPosition = horariosCalculadosRef.current.offsetTop
+            const headerOffset = 80 // Altura aproximada del header fijo
+            const offsetPosition = elementPosition - headerOffset
+            
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            })
+          }
+        }, 100)
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Error al calcular horarios')
         setBusArrivalResult(null)
@@ -171,17 +186,17 @@ export default function RealTimeConsultant() {
                 </TabsList>
               </Tabs>
               
-              <div className="mt-3 p-4 bg-gradient-to-r from-blue-50 to-green-50 rounded-xl border border-green-200">
+             {/*<div className="mt-3 p-4 bg-gradient-to-r from-blue-50 to-green-50 rounded-xl border border-green-200">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <span className="font-semibold text-gray-800 text-sm sm:text-base">
                     {configuracion.rutas[selectedRoute as keyof typeof configuracion.rutas].nombre}
                   </span>
                   <Badge variant="outline" className="w-fit bg-white border-green-300 text-green-700">
                     <Clock className="h-3 w-3 mr-1" />
-                    {configuracion.rutas[selectedRoute as keyof typeof configuracion.rutas].duracion} min
+                    {configuracion.rutas[selectedRoute as keyof typeof configuracion.rutas].duracion} min recorrido
                   </Badge>
                 </div>
-              </div>
+              </div>*/}
             </div>
 
             {/* Detector de Ubicación */}
@@ -276,7 +291,7 @@ export default function RealTimeConsultant() {
         </Card>
 
         {/* Panel de Resultados */}
-        <Card className="h-fit shadow-lg hover:shadow-xl transition-shadow duration-300 border-0 bg-white/80 backdrop-blur-sm">
+        <Card ref={horariosCalculadosRef} className="h-fit shadow-lg hover:shadow-xl transition-shadow duration-300 border-0 bg-white/80 backdrop-blur-sm">
           <CardHeader className="bg-gradient-to-r from-blue-50 to-blue-100/50 border-b border-blue-100">
             <CardTitle className="flex items-center space-x-3 text-lg sm:text-xl">
               <div className="p-2 bg-blue-600 rounded-lg">
@@ -317,10 +332,11 @@ export default function RealTimeConsultant() {
                   </div>
                 ) : (
                   <>
-                    {/* Próximo Colectivo */}
+                    {/* Próximo Colectivo y Siguiente Servicio */}
                     <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 sm:p-6 rounded-xl border border-blue-200 shadow-sm">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Próximo Colectivo */}
+                        <div>
                           <div className="flex items-center space-x-2 mb-3">
                             <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
                             <h3 className="font-bold text-blue-900 text-base sm:text-lg">Próximo Colectivo</h3>
@@ -332,27 +348,24 @@ export default function RealTimeConsultant() {
                             {BusTimingService.getStatusMessage(busArrivalResult.status, busArrivalResult.minutesToArrival)}
                           </p>
                         </div>
-                        <div className="bg-blue-600 p-3 rounded-full shadow-lg">
-                          <Bus className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
-                        </div>
+
+                        {/* Siguiente Servicio */}
+                        {busArrivalResult.followingBus && (
+                          <div className="border-l-0 md:border-l-2 md:border-blue-200 md:pl-6">
+                            <div className="flex items-center space-x-2 mb-3">
+                              <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+                              <h3 className="font-semibold text-gray-700 text-sm sm:text-base">Siguiente Servicio</h3>
+                            </div>
+                            <p className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">
+                              {BusTimingService.formatTimeDifference(busArrivalResult.followingBus.minutesToArrival)}
+                            </p>
+                            <p className="text-xs sm:text-sm text-gray-600 font-medium">
+                              Salida: {busArrivalResult.followingBus.departureTime}
+                            </p>
+                          </div>
+                        )}
                       </div>
                     </div>
-
-                    {/* Siguiente Colectivo */}
-                    {busArrivalResult.followingBus && (
-                      <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-4 sm:p-6 rounded-xl border border-gray-200">
-                        <div className="flex items-center space-x-2 mb-3">
-                          <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-                          <h3 className="font-semibold text-gray-700 text-sm sm:text-base">Siguiente Servicio</h3>
-                        </div>
-                        <p className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">
-                          {BusTimingService.formatTimeDifference(busArrivalResult.followingBus.minutesToArrival)}
-                        </p>
-                        <p className="text-xs sm:text-sm text-gray-600 font-medium">
-                          Salida programada: {busArrivalResult.followingBus.departureTime}
-                        </p>
-                      </div>
-                    )}
 
                     {/* Información del Viaje */}
                     <div className="bg-white p-4 sm:p-5 rounded-xl border border-gray-200 space-y-4">
@@ -360,12 +373,12 @@ export default function RealTimeConsultant() {
                       
                       <div className="space-y-3">
                         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
-                          <span className="text-gray-600 text-sm sm:text-base font-medium">🚏 Salida Terminal:</span>
+                          <span className="text-gray-600 text-sm sm:text-base font-medium">🚏 Salida de la Terminal:</span>
                           <span className="font-bold text-gray-800 text-sm sm:text-base">{busArrivalResult.departureTime}</span>
                         </div>
                         
                         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
-                          <span className="text-gray-600 text-sm sm:text-base font-medium">⏰ Llegada Estimada:</span>
+                          <span className="text-gray-600 text-sm sm:text-base font-medium">⏰ Llegada Estimada a la Parada:</span>
                           <span className="font-bold text-green-700 text-sm sm:text-base">
                             {busArrivalResult.nextBusArrival.toLocaleTimeString('es-AR', { 
                               hour: '2-digit', 
@@ -374,12 +387,12 @@ export default function RealTimeConsultant() {
                           </span>
                         </div>
                         
-                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
+                        {/*<div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
                           <span className="text-gray-600 text-sm sm:text-base font-medium">🎯 Precisión:</span>
                           <Badge variant="outline" className="w-fit bg-green-50 border-green-300 text-green-700 text-xs font-medium">
                             Horarios Oficiales + GPS
                           </Badge>
-                        </div>
+                        </div>*/}
                       </div>
                     </div>
                   </>

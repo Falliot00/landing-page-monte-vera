@@ -12,11 +12,11 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
               <Image
-                src="/imagenes/LogoMV.png"
+                src="/imagenes/LogoBlancoMV.png"
                 alt="Monte Vera Logo"
                 width={240}
                 height={80}
-                className="h-10 w-auto brightness-0 invert"
+                className="h-10 w-auto"
                 quality={100}
                 priority
               />
@@ -89,7 +89,6 @@ export default function Footer() {
               <div className="flex items-center space-x-3">
                 <MapPin className="h-4 w-4 text-green-400 flex-shrink-0" />
                 <span className="text-gray-300 text-sm">
-                  Esquina Belgrano y Eva Peron<br />
                   Belgrano 2705, Santa Fe, Argentina
                 </span>
               </div>

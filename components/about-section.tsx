@@ -1,62 +1,120 @@
+import { useState, useEffect, useRef } from 'react'
 import { Users, Award, MapPin, Clock } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 
+// Hook personalizado para animación de números
+const useCountUp = (end: number, duration: number = 2000, shouldStart: boolean = false) => {
+  const [count, setCount] = useState(0)
+  
+  useEffect(() => {
+    if (!shouldStart) return
+    
+    let startTime: number
+    let animationFrame: number
+    
+    const animate = (currentTime: number) => {
+      if (!startTime) startTime = currentTime
+      const progress = Math.min((currentTime - startTime) / duration, 1)
+      
+      setCount(Math.floor(progress * end))
+      
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate)
+      }
+    }
+    
+    animationFrame = requestAnimationFrame(animate)
+    
+    return () => cancelAnimationFrame(animationFrame)
+  }, [end, duration, shouldStart])
+  
+  return count
+}
+
 export default function AboutSection() {
+  const [isVisible, setIsVisible] = useState(false)
+  const sectionRef = useRef<HTMLDivElement>(null)
   const stats = [
     {
       icon: <Users className="h-8 w-8 text-green-600" />,
-      number: "25+",
+      number: 50,
+      suffix: "+",
       label: "Años de experiencia"
     },
     {
       icon: <MapPin className="h-8 w-8 text-green-600" />,
-      number: "98",
+      number: 98,
+      suffix: "",
       label: "Paradas de servicio"
     },
     {
       icon: <Clock className="h-8 w-8 text-green-600" />,
-      number: "72",
+      number: 72,
+      suffix: "",
       label: "Servicios diarios"
     },
     {
       icon: <Award className="h-8 w-8 text-green-600" />,
-      number: "100%",
+      number: 100,
+      suffix: "%",
       label: "Compromiso con la calidad"
     }
   ]
+
+  // Intersection Observer para detectar cuando la sección es visible
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+        }
+      },
+      { threshold: 0.3 }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <div className="container mx-auto px-4">
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Sobre Monte Vera
+          Sobre Empresa Monte Vera SRL
         </h2>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Más de dos décadas conectando comunidades con un servicio de transporte confiable y moderno
+          Más de cinco décadas conectando comunidades con un servicio de transporte confiable y moderno
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        {stats.map((stat, index) => (
-          <Card 
-            key={index} 
-            className="text-center transform hover:scale-105 transition-all duration-300 hover:shadow-lg"
-          >
-            <CardContent className="p-6">
-              <div className="flex justify-center mb-4 group transition-transform duration-300 transform hover:scale-110">
-                <div className="p-3 rounded-full bg-green-50 group-hover:bg-green-100 transition-colors duration-300">
-                  {stat.icon}
+      <div ref={sectionRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        {stats.map((stat, index) => {
+          const count = useCountUp(stat.number, 2000 + index * 200, isVisible)
+          
+          return (
+            <Card 
+              key={index} 
+              className="text-center transform hover:scale-105 transition-all duration-300 hover:shadow-lg"
+            >
+              <CardContent className="p-6">
+                <div className="flex justify-center mb-4 group transition-transform duration-300 transform hover:scale-110">
+                  <div className="p-3 rounded-full bg-green-50 group-hover:bg-green-100 transition-colors duration-300">
+                    {stat.icon}
+                  </div>
                 </div>
-              </div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">
-                {stat.number}
-              </div>
-              <div className="text-sm text-gray-600 font-medium">
-                {stat.label}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+                <div className="text-3xl font-bold text-gray-900 mb-2">
+                  {count}{stat.suffix}
+                </div>
+                <div className="text-sm text-gray-600 font-medium">
+                  {stat.label}
+                </div>
+              </CardContent>
+            </Card>
+          )
+        })}
       </div>
 
       {/* Contenido principal de la sección "Sobre Monte Vera" */}
@@ -113,29 +171,15 @@ export default function AboutSection() {
             </CardContent>
           </Card>
 
-          <Card className="bg-gray-50 border-gray-200">
+          <Card className="bg-purple-50 border-purple-200">
             <CardContent className="p-6">
-              <h4 className="text-lg font-semibold text-gray-900 mb-3">
-                Cobertura del Servicio
+              <h4 className="text-lg font-semibold text-purple-900 mb-3">
+                Nuestra Visión
               </h4>
-              <div className="grid grid-cols-2 gap-4 text-sm text-gray-700">
-                <div>
-                  <div className="font-medium">Santa Fe</div>
-                  <div className="text-xs text-gray-500">16 paradas</div>
-                </div>
-                <div>
-                  <div className="font-medium">Espora</div>
-                  <div className="text-xs text-gray-500">31 paradas</div>
-                </div>
-                <div>
-                  <div className="font-medium">Monte Vera</div>
-                  <div className="text-xs text-gray-500">41 paradas</div>
-                </div>
-                <div>
-                  <div className="font-medium">Otras localidades</div>
-                  <div className="text-xs text-gray-500">10 paradas</div>
-                </div>
-              </div>
+              <p className="text-purple-800 leading-relaxed">
+                Ser líderes en el sector de transporte interurbano y servicios a demanda, 
+                reconocidos por nuestra excelencia operativa y nuestro compromiso con la sociedad.
+              </p>
             </CardContent>
           </Card>
         </div>

@@ -32,7 +32,7 @@ if (typeof window !== 'undefined') {
 
     // Icono para colectivo en movimiento
     busMovingIcon = new L.Icon({
-      iconUrl: '/icons/map/bus-moving.svg',
+      iconUrl: '/icons/map/bus-moving2.svg',
       iconSize: [32, 32],
       iconAnchor: [16, 16],
       popupAnchor: [0, -16],

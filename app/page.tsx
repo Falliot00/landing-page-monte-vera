@@ -46,9 +46,9 @@ export default function HomePage() {
             <HeroSection />
           </section>
           
-          <section id="consultor" className="py-16 bg-gray-50">
+          {/*<section id="consultor" className="py-16 bg-gray-50">
             <RealTimeConsultant />
-          </section>
+          </section>*/}
           
           <section id="nosotros" className="py-16">
             <AboutSection />

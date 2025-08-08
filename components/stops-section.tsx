@@ -132,14 +132,11 @@ export default function StopsSection() {
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           Paradas de Servicio
         </h2>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          98 paradas estratégicamente ubicadas en 6 localidades para tu comodidad
-        </p>
       </div>
 
 
       {/* Buscador y Filtros */}
-      <Card className="mb-8">
+      {/*<Card className="mb-8">
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Search className="h-5 w-5 text-gray-600" />
@@ -166,7 +163,7 @@ export default function StopsSection() {
             </div>
           </div>
 
-          {/* Filtros por Localidad */}
+          {// Filtros por Localidad }
           <div className="flex flex-wrap gap-2">
             <Button
               variant={selectedLocality === 'all' ? 'default' : 'outline'}
@@ -187,7 +184,7 @@ export default function StopsSection() {
             ))}
           </div>
         </CardContent>
-      </Card>
+      </Card>*/}
 
       {/* Lista de Paradas Desplegable por Ruta y Localidad */}
       <Card className="mb-8">
@@ -292,7 +289,7 @@ export default function StopsSection() {
       <DynamicStopsMap />
 
       {/* Información Adicional */}
-      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/*<div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <Card className="bg-gradient-to-br from-blue-50 to-blue-100/50 border-blue-200 transform hover:scale-105 transition-all duration-300 hover:shadow-lg">
           <CardContent className="p-8 text-center">
             <div className="inline-flex p-3 bg-blue-100 rounded-xl mb-4">
@@ -322,7 +319,7 @@ export default function StopsSection() {
             <p className="text-sm text-orange-800 leading-relaxed">Promedio de 1-2 minutos entre paradas consecutivas</p>
           </CardContent>
         </Card>
-      </div>
+      </div>*/}
     </div>
   )
 }

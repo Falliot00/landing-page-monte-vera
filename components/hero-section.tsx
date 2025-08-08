@@ -53,7 +53,7 @@ export default function HeroSection() {
           <div className="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center items-center mb-12">
             <div className="flex items-center space-x-2 text-green-200 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20 hover:bg-white/15 transition-all duration-300">
               <MapPin className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
-              <span className="text-sm sm:text-base whitespace-nowrap">98 paradas en 6 localidades</span>
+              <span className="text-sm sm:text-base whitespace-nowrap">98 paradas</span>
             </div>
             <div className="flex items-center space-x-2 text-green-200 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20 hover:bg-white/15 transition-all duration-300">
               <Clock className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
@@ -66,13 +66,14 @@ export default function HeroSection() {
             <Link href="/consultor-gps">
               <Button
                 size="lg"
-                className="group bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-full shadow-2xl hover:shadow-green-500/25 transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 relative overflow-hidden"
+                className="group bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-full shadow-2xl hover:shadow-red-500/30 transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 relative overflow-hidden border-2 border-red-400/20 hover:border-red-300/40"
               >
                 <span className="relative z-10 flex items-center">
                   Consultar Horarios GPS
                   <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform duration-300" />
                 </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-green-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
               </Button>
             </Link>
             

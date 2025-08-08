@@ -16,7 +16,7 @@ export default function Header({ activeSection }: HeaderProps) {
 
   const menuItems = [
     { id: 'inicio', label: 'Inicio', href: '/' },
-    { id: 'consultor', label: 'Consultor GPS', href: '/#consultor' },
+    { id: 'consultor', label: 'Consultor GPS', href: '/consultor-gps' },
     { id: 'nosotros', label: 'Nosotros', href: '/#nosotros' },
     { id: 'horarios', label: 'Horarios', href: '/#horarios' },
     { id: 'tarifas', label: 'Tarifas', href: '/#tarifas' },
@@ -39,9 +39,9 @@ export default function Header({ activeSection }: HeaderProps) {
   }
 
   const isActiveItem = (item: { id: string; href: string }) => {
-    // Si estamos en la página del consultor GPS, no marcar ningún item como activo en el header
-    if (pathname === '/consultor-gps') {
-      return false
+    // Si estamos en la página del consultor GPS y es el item consultor, marcarlo como activo
+    if (pathname === '/consultor-gps' && item.id === 'consultor') {
+      return true
     }
     // Si estamos en la página principal, usar activeSection
     if (pathname === '/' && item.id === activeSection) {

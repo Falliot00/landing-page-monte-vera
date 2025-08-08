@@ -52,7 +52,7 @@ export default function ContactSection() {
       icon: <Phone className="h-5 w-5" />,
       title: "Teléfono",
       content: "0342 412-3345",
-      description: "Lunes a Viernes 8:00 - 12:00"
+      description: "Lunes a Viernes 8:00 - 16:00"
     },
     {
       icon: <Mail className="h-5 w-5" />,
@@ -63,8 +63,8 @@ export default function ContactSection() {
     {
       icon: <MapPin className="h-5 w-5" />,
       title: "Oficinas",
-      content: "Esquina Belgrano y Eva Peron",
-      description: "Belgrano 2705, Santa Fe, Argentina"
+      content: "Belgrano 2705, Santa Fe, Argentina",
+      description: "Esquina Belgrano y Eva Perón"
     },
     {
       icon: <Clock className="h-5 w-5" />,

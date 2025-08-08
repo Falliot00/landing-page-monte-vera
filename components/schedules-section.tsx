@@ -241,7 +241,7 @@ export default function SchedulesSection() {
       </Tabs>
 
       {/* Información Operativa */}
-      <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/*<div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="bg-blue-50 border-blue-200">
           <CardContent className="p-6 text-center">
             <Clock className="h-8 w-8 text-blue-600 mx-auto mb-3" />
@@ -265,7 +265,7 @@ export default function SchedulesSection() {
             <p className="text-sm text-orange-800">15-30 minutos según demanda</p>
           </CardContent>
         </Card>
-      </div>
+      </div>*/}
     </div>
   )
 }
