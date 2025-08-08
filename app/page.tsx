@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import Header from '@/components/header'
 import HeroSection from '@/components/hero-section'
-import RealTimeConsultant from '@/components/real-time-consultant'
 import AboutSection from '@/components/about-section'
 import SchedulesSection from '@/components/schedules-section'
 import FaresSection from '@/components/fares-section'

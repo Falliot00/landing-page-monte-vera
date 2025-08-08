@@ -31,6 +31,40 @@ const useCountUp = (end: number, duration: number = 2000, shouldStart: boolean =
   return count
 }
 
+// Componente separado para cada tarjeta de estadística
+interface StatCardProps {
+  stat: {
+    icon: React.ReactNode
+    number: number
+    suffix: string
+    label: string
+  }
+  index: number
+  isVisible: boolean
+}
+
+const StatCard = ({ stat, index, isVisible }: StatCardProps) => {
+  const count = useCountUp(stat.number, 2000 + index * 200, isVisible)
+  
+  return (
+    <Card className="text-center transform hover:scale-105 transition-all duration-300 hover:shadow-lg">
+      <CardContent className="p-6">
+        <div className="flex justify-center mb-4 group transition-transform duration-300 transform hover:scale-110">
+          <div className="p-3 rounded-full bg-green-50 group-hover:bg-green-100 transition-colors duration-300">
+            {stat.icon}
+          </div>
+        </div>
+        <div className="text-3xl font-bold text-gray-900 mb-2">
+          {count}{stat.suffix}
+        </div>
+        <div className="text-sm text-gray-600 font-medium">
+          {stat.label}
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 export default function AboutSection() {
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -91,30 +125,14 @@ export default function AboutSection() {
       </div>
 
       <div ref={sectionRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        {stats.map((stat, index) => {
-          const count = useCountUp(stat.number, 2000 + index * 200, isVisible)
-          
-          return (
-            <Card 
-              key={index} 
-              className="text-center transform hover:scale-105 transition-all duration-300 hover:shadow-lg"
-            >
-              <CardContent className="p-6">
-                <div className="flex justify-center mb-4 group transition-transform duration-300 transform hover:scale-110">
-                  <div className="p-3 rounded-full bg-green-50 group-hover:bg-green-100 transition-colors duration-300">
-                    {stat.icon}
-                  </div>
-                </div>
-                <div className="text-3xl font-bold text-gray-900 mb-2">
-                  {count}{stat.suffix}
-                </div>
-                <div className="text-sm text-gray-600 font-medium">
-                  {stat.label}
-                </div>
-              </CardContent>
-            </Card>
-          )
-        })}
+        {stats.map((stat, index) => (
+          <StatCard 
+            key={index}
+            stat={stat}
+            index={index}
+            isVisible={isVisible}
+          />
+        ))}
       </div>
 
       {/* Contenido principal de la sección "Sobre Monte Vera" */}

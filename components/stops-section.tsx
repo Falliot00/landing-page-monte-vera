@@ -1,18 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import { MapPin, Search, Navigation, Clock, ChevronDown, ChevronUp } from 'lucide-react'
+import { MapPin, Navigation, ChevronDown, ChevronUp } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { paradas as allParadasData, configuracion } from '@/lib/data'
 import DynamicStopsMap from '@/components/dynamic-stops-map'
 
 export default function StopsSection() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedLocality, setSelectedLocality] = useState('all')
   // Separate states for route and locality expansion
   const [expandedRouteId, setExpandedRouteId] = useState<string | null>(null)
   const [expandedLocalityId, setExpandedLocalityId] = useState<string | null>(null)
@@ -27,22 +23,18 @@ export default function StopsSection() {
     "Monte Vera": { codes: "MV35-MV62, MV49-MV48", color: "bg-orange-100 text-orange-800", dotColorClass: "bg-orange-500" }
   };
 
-  // Combine all stops from both routes and remove duplicates for overall summary
-  const allUniqueStops = Array.from(new Map(
-    [...allParadasData.santafe_montevera, ...allParadasData.montevera_santafe].map(stop => [stop.id, stop])
-  ).values());
 
   // Prepare data for summary cards (top section)
-  const paradasPorLocalidadSummary = Object.keys(localityDisplayInfo).map(locality => {
-    const stopsInLocality = allUniqueStops.filter(p => p.localidad === locality);
-    return {
-      locality,
-      count: stopsInLocality.length,
-      codes: localityDisplayInfo[locality].codes,
-      color: localityDisplayInfo[locality].color,
-      dotColorClass: localityDisplayInfo[locality].dotColorClass,
-    };
-  });
+  // const paradasPorLocalidadSummary = Object.keys(localityDisplayInfo).map(locality => {
+  //   const stopsInLocality = allUniqueStops.filter(p => p.localidad === locality);
+  //   return {
+  //     locality,
+  //     count: stopsInLocality.length,
+  //     codes: localityDisplayInfo[locality].codes,
+  //     color: localityDisplayInfo[locality].color,
+  //     dotColorClass: localityDisplayInfo[locality].dotColorClass,
+  //   };
+  // });
 
   // Function to group and filter stops by route and then by locality
   const getGroupedStopsByRouteAndLocality = () => {
@@ -56,15 +48,7 @@ export default function StopsSection() {
 
     for (const routeId of Object.keys(allParadasData) as Array<keyof typeof allParadasData>) {
       const stopsForRoute = allParadasData[routeId];
-      const filteredStopsForRoute = stopsForRoute.filter(stop => {
-        const matchesSearch = searchTerm === '' ||
-          stop.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          stop.id.toLowerCase().includes(searchTerm.toLowerCase());
-        
-        const matchesLocalityFilter = selectedLocality === 'all' || stop.localidad === selectedLocality;
-        
-        return matchesSearch && matchesLocalityFilter;
-      });
+      const filteredStopsForRoute = stopsForRoute;
 
       const localitiesInRoute: { [locality: string]: Array<{
         id: string
