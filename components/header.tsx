@@ -110,7 +110,7 @@ export default function Header({ activeSection }: HeaderProps) {
                 isMenuOpen ? 'opacity-0 scale-x-0' : 'opacity-100 scale-x-100'
               }`} />
               <span className={`absolute left-0 w-6 h-0.5 bg-current transition-all duration-300 transform ${
-                isMenuOpen ? 'top-3 -rotate-45' : 'top-4.5'
+                isMenuOpen ? 'top-3 -rotate-45' : 'top-[1.125rem]'
               }`} />
             </div>
           </Button>
