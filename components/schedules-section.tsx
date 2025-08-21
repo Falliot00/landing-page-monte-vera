@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Clock, Calendar, ArrowRight } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -47,10 +47,25 @@ export default function SchedulesSection() {
 
   const currentSchedule = schedules[selectedRoute as keyof typeof schedules]
 
+  const argentinaTime = () =>
+    new Date(
+      new Date().toLocaleString('en-US', {
+        timeZone: 'America/Argentina/Buenos_Aires'
+      })
+    )
+
+  const [currentTime, setCurrentTime] = useState(argentinaTime())
+
+  useEffect(() => {
+    setCurrentTime(argentinaTime())
+
+    const interval = setInterval(() => setCurrentTime(argentinaTime()), 60_000)
+    return () => clearInterval(interval)
+  }, [])
+
   const getTimeStatus = (time: string) => {
-    const now = new Date()
-    const currentHour = now.getHours()
-    const currentMinute = now.getMinutes()
+    const currentHour = currentTime.getHours()
+    const currentMinute = currentTime.getMinutes()
     const [hour, minute] = time.split(':').map(Number)
     
     const currentTotalMinutes = currentHour * 60 + currentMinute

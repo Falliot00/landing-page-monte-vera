@@ -39,11 +39,18 @@ export interface BusTimingRequest {
 }
 
 export class BusTimingService {
+  private static argentinaTime(): Date {
+    return new Date(
+      new Date().toLocaleString('en-US', {
+        timeZone: 'America/Argentina/Buenos_Aires'
+      })
+    )
+  }
   /**
    * Calculates the next bus arrival time at a specific stop
    */
   static calculateBusArrival({ routeId, stopId }: BusTimingRequest): BusArrivalResult {
-    const currentTime = new Date()
+    const currentTime = this.argentinaTime()
     const currentDayType = this.getCurrentDayType()
     
     // Get the schedule for today
@@ -60,7 +67,7 @@ export class BusTimingService {
     
     if (relevantBuses.length === 0) {
       return {
-        nextBusArrival: new Date(),
+        nextBusArrival: this.argentinaTime(),
         minutesToArrival: 0,
         currentTime,
         departureTime: '',
@@ -94,7 +101,7 @@ export class BusTimingService {
    * Determines the current day type for schedule lookup
    */
   static getCurrentDayType(): 'laborables' | 'sabados' | 'domingos' {
-    const today = new Date()
+    const today = this.argentinaTime()
     const dayOfWeek = today.getDay() // 0 = Sunday, 6 = Saturday
     const todayISO = today.toISOString().split('T')[0]
 
