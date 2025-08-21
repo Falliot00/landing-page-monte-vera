@@ -34,6 +34,10 @@ export async function POST(request: NextRequest) {
 
     const resend = new Resend(apiKey)
 
+    // Configuración de emails - usar variables de entorno para flexibilidad
+    const fromEmail = process.env.EMAIL_FROM || 'noreply@example.com'
+    const toEmail = process.env.EMAIL_TO || 'contact@example.com'
+
     // Crear HTML bonito para el email
     const htmlContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
@@ -89,11 +93,12 @@ export async function POST(request: NextRequest) {
       </div>
     `
 
+    // NOTA: Usando dominio de prueba de Resend. Para producción verificar un dominio propio.
     const result = await resend.emails.send({
-      from: 'onboarding@resend.dev', // Dominio verificado (requerido por Resend)
-      to: 'info@monteverasrl.com.ar', // Tu email para pruebas
+      from: fromEmail, // Configurable via ENV o usa dominio de prueba
+      to: toEmail, // Configurable via ENV o usa email verificado
       replyTo: email, // El email del usuario - cuando respondas irá directamente a él
-      subject: `[Web] ${asunto} - De: ${nombre}`,
+      subject: `[Web Monte Vera] ${asunto} - De: ${nombre}`,
       html: htmlContent
     })
 
