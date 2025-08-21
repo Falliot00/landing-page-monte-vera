@@ -216,6 +216,20 @@ export default function SchedulesSection() {
                   )
                 })}
               </div>
+              <div className="mt-6 flex flex-wrap gap-4 text-xs text-gray-600">
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 bg-green-100 border border-green-300 rounded"></div>
+                  <span>Próximo (30 min)</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 bg-gray-100 border border-gray-200 rounded"></div>
+                  <span>Ya pasó</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 bg-white border border-gray-300 rounded"></div>
+                  <span>Próximos servicios</span>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
@@ -249,6 +263,20 @@ export default function SchedulesSection() {
                     </div>
                   )
                 })}
+              </div>
+              <div className="mt-6 flex flex-wrap gap-4 text-xs text-gray-600">
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 bg-green-100 border border-green-300 rounded"></div>
+                  <span>Próximo (30 min)</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 bg-gray-100 border border-gray-200 rounded"></div>
+                  <span>Ya pasó</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 bg-white border border-gray-300 rounded"></div>
+                  <span>Próximos servicios</span>
+                </div>
               </div>
             </CardContent>
           </Card>

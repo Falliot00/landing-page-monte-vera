@@ -18,6 +18,7 @@ export default function ContactSection() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
+  const [error, setError] = useState('')
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -30,10 +31,22 @@ export default function ContactSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setError('')
     
-    // Simular envío del formulario
-    setTimeout(() => {
-      setIsSubmitting(false)
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Error al enviar el mensaje')
+      }
+
       setShowSuccess(true)
       setFormData({
         nombre: '',
@@ -42,9 +55,13 @@ export default function ContactSection() {
         asunto: '',
         mensaje: ''
       })
-      
       setTimeout(() => setShowSuccess(false), 5000)
-    }, 2000)
+    } catch (error) {
+      console.error('Error al enviar el mensaje:', error)
+      setError(error instanceof Error ? error.message : 'Error al enviar el mensaje')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const contactInfo = [
@@ -57,7 +74,7 @@ export default function ContactSection() {
     {
       icon: <Mail className="h-5 w-5" />,
       title: "Email",
-      content: "info@montevera.com.ar",
+      content: "info@monteverasrl.com.ar",
       description: "Respuesta en 24 horas"
     },
     {
@@ -169,6 +186,14 @@ export default function ContactSection() {
                   <Send className="h-4 w-4 text-green-600" />
                   <AlertDescription className="text-green-800">
                     ¡Mensaje enviado correctamente! Te responderemos dentro de las próximas 24 horas.
+                  </AlertDescription>
+                </Alert>
+              )}
+
+              {error && (
+                <Alert className="mb-6 bg-red-50 border-red-200">
+                  <AlertDescription className="text-red-800">
+                    {error}
                   </AlertDescription>
                 </Alert>
               )}

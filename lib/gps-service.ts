@@ -17,7 +17,7 @@ interface GPSResponse {
   status: DeviceLocation[];
 }
 
-const GPS_API_BASE = 'http://190.183.254.253:8088';
+const GPS_API_BASE = 'https://gps.monteverasrl.com.ar/';
 const JSESSION = 'cf6b70a3-c82b-4392-8ab6-bbddce336222';
 
 export class GPSService {

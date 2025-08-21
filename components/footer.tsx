@@ -22,7 +22,7 @@ export default function Footer() {
               />
             </div>
             <p className="text-gray-300 mb-4 max-w-md">
-              Más de 25 años conectando Santa Fe y Monte Vera con un servicio de transporte 
+              Más de 50 años conectando Santa Fe y Monte Vera con un servicio de transporte 
               público confiable, moderno y accesible para toda la comunidad.
             </p>
             <div className="flex space-x-4">
@@ -98,7 +98,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-4 w-4 text-green-400 flex-shrink-0" />
-                <span className="text-gray-300 text-sm">info@montevera.com.ar</span>
+                <span className="text-gray-300 text-sm">info@monteverasrl.com.ar</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Clock className="h-4 w-4 text-green-400 flex-shrink-0" />
@@ -112,11 +112,11 @@ export default function Footer() {
 
         {/* Información Legal */}
         <div className="border-t border-gray-800 mt-8 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0">
             <div className="text-sm text-gray-400">
-              © {currentYear} Monte Vera. Todos los derechos reservados.
+              © {currentYear} Empresa Monte Vera SRL. Todos los derechos reservados.
             </div>
-            <div className="flex space-x-6 text-sm text-gray-400">
+            {/*<div className="flex space-x-6 text-sm text-gray-400">
               <a href="#" className="hover:text-green-400 transition-colors">
                 Política de Privacidad
               </a>
@@ -126,15 +126,15 @@ export default function Footer() {
               <a href="#" className="hover:text-green-400 transition-colors">
                 Accesibilidad
               </a>
-            </div>
+            </div>*/}
           </div>
           
-          <div className="mt-4 text-xs text-gray-500 text-center">
+          {/*<div className="mt-4 text-xs text-gray-500 text-center">
             <p>
               Servicio de transporte público regulado por la Municipalidad de Santa Fe. 
               Tarifas vigentes desde el 17/01/2025. Pago únicamente con tarjeta SUBE.
             </p>
-          </div>
+          </div>*/}
         </div>
       </div>
     </footer>
