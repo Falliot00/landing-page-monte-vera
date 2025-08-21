@@ -1,5 +1,24 @@
 import { configuracion, paradas } from './data'
 
+// Lista de feriados nacionales (formato YYYY-MM-DD)
+const FERIADOS: string[] = [
+  '2025-01-01', // Año Nuevo
+  '2025-02-24', // Carnaval
+  '2025-02-25', // Carnaval
+  '2025-03-24', // Día de la Memoria
+  '2025-04-02', // Día del Veterano y de los Caídos en la Guerra de Malvinas
+  '2025-04-18', // Viernes Santo
+  '2025-05-01', // Día del Trabajador
+  '2025-05-25', // Revolución de Mayo
+  '2025-06-20', // Paso a la Inmortalidad del Gral. Belgrano
+  '2025-07-09', // Día de la Independencia
+  '2025-08-17', // Paso a la Inmortalidad del Gral. San Martín
+  '2025-10-12', // Día del Respeto a la Diversidad Cultural
+  '2025-11-20', // Día de la Soberanía Nacional
+  '2025-12-08', // Inmaculada Concepción
+  '2025-12-25'  // Navidad
+]
+
 export interface BusArrivalResult {
   nextBusArrival: Date
   minutesToArrival: number
@@ -74,13 +93,16 @@ export class BusTimingService {
   /**
    * Determines the current day type for schedule lookup
    */
-  private static getCurrentDayType(): 'laborables' | 'sabados' | 'domingos' {
+  static getCurrentDayType(): 'laborables' | 'sabados' | 'domingos' {
     const today = new Date()
     const dayOfWeek = today.getDay() // 0 = Sunday, 6 = Saturday
-    
-    if (dayOfWeek === 0) return 'domingos' // Sunday
-    if (dayOfWeek === 6) return 'sabados' // Saturday
-    return 'laborables' // Monday to Friday
+    const todayISO = today.toISOString().split('T')[0]
+
+    // Los feriados se tratan con horario de domingo
+    if (FERIADOS.includes(todayISO)) return 'domingos'
+    if (dayOfWeek === 0) return 'domingos' // Domingo
+    if (dayOfWeek === 6) return 'sabados' // Sábado
+    return 'laborables' // Lunes a viernes
   }
 
   /**

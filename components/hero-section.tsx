@@ -4,8 +4,15 @@ import { ArrowRight, MapPin, Clock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import Link from 'next/link'
+import { configuracion } from '@/lib/data'
+import { BusTimingService } from '@/lib/bus-timing-service'
 
 export default function HeroSection() {
+  const dayType = BusTimingService.getCurrentDayType()
+  const primerServicioSF_MV =
+    configuracion.horariosOficiales.santafe_montevera[dayType].primerColectivo
+  const primerServicioMV_SF =
+    configuracion.horariosOficiales.montevera_santafe[dayType].primerColectivo
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image with improved overlay */}
@@ -96,7 +103,7 @@ export default function HeroSection() {
                 </p>
                 <p className="text-gray-200 flex items-center justify-between">
                   <span>Primer servicio:</span>
-                  <span className="font-semibold text-white">05:40</span>
+                  <span className="font-semibold text-white">{primerServicioSF_MV}</span>
                 </p>
               </div>
             </div>
@@ -113,7 +120,7 @@ export default function HeroSection() {
                 </p>
                 <p className="text-gray-200 flex items-center justify-between">
                   <span>Primer servicio:</span>
-                  <span className="font-semibold text-white">04:55</span>
+                  <span className="font-semibold text-white">{primerServicioMV_SF}</span>
                 </p>
               </div>
             </div>
