@@ -30,21 +30,33 @@ export default function ContactSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    
-    // Simular envío del formulario
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setShowSuccess(true)
-      setFormData({
-        nombre: '',
-        email: '',
-        telefono: '',
-        asunto: '',
-        mensaje: ''
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
       })
-      
-      setTimeout(() => setShowSuccess(false), 5000)
-    }, 2000)
+
+      if (response.ok) {
+        setShowSuccess(true)
+        setFormData({
+          nombre: '',
+          email: '',
+          telefono: '',
+          asunto: '',
+          mensaje: ''
+        })
+        setTimeout(() => setShowSuccess(false), 5000)
+      } else {
+        console.error('Error al enviar el mensaje')
+      }
+    } catch (error) {
+      console.error('Error al enviar el mensaje', error)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const contactInfo = [
