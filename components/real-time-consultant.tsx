@@ -28,7 +28,12 @@ const isStopData = (obj: unknown): obj is StopData => {
          'id' in obj && 
          'nombre' in obj && 
          'coordenadas' in obj &&
-         typeof (obj as Record<string, unknown>).id === 'string'
+         typeof (obj as Record<string, unknown>).id === 'string' &&
+         typeof (obj as Record<string, unknown>).nombre === 'string' &&
+         typeof (obj as Record<string, unknown>).coordenadas === 'object' &&
+         (obj as Record<string, unknown>).coordenadas !== null &&
+         typeof ((obj as Record<string, unknown>).coordenadas as Record<string, unknown>).lat === 'number' &&
+         typeof ((obj as Record<string, unknown>).coordenadas as Record<string, unknown>).lng === 'number'
 }
 
 export default function RealTimeConsultant() {
@@ -59,11 +64,11 @@ export default function RealTimeConsultant() {
           const { latitude, longitude } = position.coords
 
           // Encontrar parada más cercana del recorrido seleccionado
-          const routeStops = (allParadas[selectedRoute as keyof typeof allParadas] || []).filter(isStopData)
+          const routeStops = getParadasForRoute(selectedRoute)
           let closest: StopData | null = null
           let minDistance = Infinity
 
-          routeStops.forEach(stop => {
+          for (const stop of routeStops) {
             const distance = Math.sqrt(
               Math.pow(stop.coordenadas.lat - latitude, 2) + Math.pow(stop.coordenadas.lng - longitude, 2)
             )
@@ -71,9 +76,9 @@ export default function RealTimeConsultant() {
               minDistance = distance
               closest = stop
             }
-          })
+          }
 
-          if (closest) {
+          if (closest !== null && closest.id) {
             setNearestStop(closest)
             setSelectedStop(closest.id)
             setSelectedStopInMap(closest)
@@ -135,7 +140,7 @@ export default function RealTimeConsultant() {
 
   const getParadasForRoute = (routeId: string): StopData[] => {
     const stops = allParadas[routeId as keyof typeof allParadas] || [];
-    return stops.filter(isStopData);
+    return stops.filter((stop): stop is StopData => isStopData(stop));
   };
 
   const getGroupedParadas = () => {
