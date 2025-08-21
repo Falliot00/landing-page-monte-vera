@@ -46,18 +46,24 @@ export default function RealTimeConsultant() {
   // Detectar ubicación del usuario
   const detectLocation = () => {
     setIsLoadingLocation(true)
-    
+
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 60000
+      }
+
+      const watchId = navigator.geolocation.watchPosition(
         (position) => {
           const { latitude, longitude } = position.coords
-          
-          // Encontrar parada más cercana
-          const allStopsArray = Object.values(allParadas).flat().filter(isStopData)
+
+          // Encontrar parada más cercana del recorrido seleccionado
+          const routeStops = (allParadas[selectedRoute as keyof typeof allParadas] || []).filter(isStopData)
           let closest: StopData | null = null
           let minDistance = Infinity
-          
-          allStopsArray.forEach(stop => {
+
+          routeStops.forEach(stop => {
             const distance = Math.sqrt(
               Math.pow(stop.coordenadas.lat - latitude, 2) + Math.pow(stop.coordenadas.lng - longitude, 2)
             )
@@ -66,21 +72,25 @@ export default function RealTimeConsultant() {
               closest = stop
             }
           })
-          
+
           if (closest) {
             setNearestStop(closest)
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            setSelectedStop((closest as any).id)
+            setSelectedStop(closest.id)
             setSelectedStopInMap(closest)
           }
-          
+
           setIsLoadingLocation(false)
+          navigator.geolocation.clearWatch(watchId)
         },
         (error) => {
           console.error('Error getting location:', error)
           setIsLoadingLocation(false)
-        }
+          navigator.geolocation.clearWatch(watchId)
+        },
+        options
       )
+    } else {
+      setIsLoadingLocation(false)
     }
   }
 
