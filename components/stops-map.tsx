@@ -2,13 +2,36 @@
 
 import { useEffect, useState } from 'react'
 import type L from 'leaflet'
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { MapPin } from 'lucide-react'
+import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet'
 import { paradas, configuracion } from '@/lib/data'
 import { useStopSelection } from '@/contexts/stop-selection-context'
 import coordenadasSFMV from '@/lib/coordenadas_recorrido_santa_fe_monte_vera.json'
 import coordenadasMVSF from '@/lib/coordenadas_recorrido_monte_vera_santa_fe.json'
+
+// Componente helper para manejar el centro y zoom del mapa
+function MapController() {
+  const map = useMap()
+  const { selectedStop, selectedRoute } = useStopSelection()
+
+  useEffect(() => {
+    if (selectedStop) {
+      // Animar hacia la parada seleccionada con zoom
+      map.flyTo([selectedStop.coordenadas.lat, selectedStop.coordenadas.lng], 16, {
+        duration: 1.5,
+        easeLinearity: 0.1
+      })
+    } else {
+      // Si no hay parada seleccionada, volver al centro
+      const mapCenter: [number, number] = [-31.576, -60.689]
+      map.flyTo(mapCenter, 12, {
+        duration: 1,
+        easeLinearity: 0.1
+      })
+    }
+  }, [selectedStop, selectedRoute, map])
+
+  return null
+}
 
 export default function StopsMap() {
   const { selectedRoute, selectedStop } = useStopSelection()
@@ -47,7 +70,17 @@ export default function StopsMap() {
 
         // Ícono para parada seleccionada
         const selectedStopIcon = L.divIcon({
-          html: `<div style="background-color: #ff6b35; width: 18px; height: 18px; border-radius: 50%; border: 3px solid white; box-shadow: 0 3px 8px rgba(0,0,0,0.4); animation: pulse 2s infinite;"></div>`,
+          html: `<div style="background-color: #ff6b35; width: 18px; height: 18px; border-radius: 50%; border: 3px solid white; box-shadow: 0 3px 8px rgba(0,0,0,0.4);"></div>
+                 <style>
+                   @keyframes pulse {
+                     0% { transform: scale(1); opacity: 1; }
+                     50% { transform: scale(1.2); opacity: 0.7; }
+                     100% { transform: scale(1); opacity: 1; }
+                   }
+                   .custom-selected-stop-icon div {
+                     animation: pulse 2s infinite;
+                   }
+                 </style>`,
           className: 'custom-selected-stop-icon',
           iconSize: [24, 24],
           iconAnchor: [12, 12]
@@ -112,113 +145,68 @@ export default function StopsMap() {
   const showMonteVeraRoute = selectedRoute === 'montevera_santafe'
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center space-x-2">
-          <MapPin className="h-5 w-5 text-green-600" />
-          <span>
-            Mapa: {selectedRoute === 'santafe_montevera' ? 'Santa Fe → Monte Vera' : 'Monte Vera → Santa Fe'}
-          </span>
-        </CardTitle>
+    <div className="h-full w-full">
+      <MapContainer
+        center={mapCenter}
+        zoom={12}
+        style={{ height: '100%', width: '100%' }}
+        className="z-0 rounded-lg"
+      >
+        <MapController />
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
         
-        {/* Leyenda dinámica */}
-        <div className="flex items-center space-x-6 text-xs">
-          {showSantaFeRoute && (
-            <>
-              <div className="flex items-center space-x-1">
-                <div className="w-4 h-1 bg-blue-500"></div>
-                <span>SF → MV</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div style={{ backgroundColor: configuracion.rutas.santafe_montevera.color }} className="w-3 h-3 rounded-full border border-white"></div>
-                <span>Paradas SF→MV</span>
-              </div>
-            </>
-          )}
-          {showMonteVeraRoute && (
-            <>
-              <div className="flex items-center space-x-1">
-                <div className="w-4 h-1 bg-green-500"></div>
-                <span>MV → SF</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div style={{ backgroundColor: configuracion.rutas.montevera_santafe.color }} className="w-3 h-3 rounded-full border border-white"></div>
-                <span>Paradas MV→SF</span>
-              </div>
-            </>
-          )}
-          {selectedStop && (
-            <div className="flex items-center space-x-2">
-              <div className="w-4 h-4 bg-orange-500 rounded-full border-2 border-white shadow-md"></div>
-              <span className="font-medium">Parada seleccionada</span>
-            </div>
-          )}
-        </div>
-      </CardHeader>
-      
-      <CardContent>
-        <div className="h-96 w-full rounded-lg overflow-hidden border">
-          <MapContainer
-            center={mapCenter}
-            zoom={12}
-            style={{ height: '100%', width: '100%' }}
-            className="z-0"
-          >
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            />
-            
-            {/* Ruta Santa Fe → Monte Vera */}
-            {showSantaFeRoute && (
-              <Polyline
-                positions={santaFeToMonteVeraRoute}
-                color={configuracion.rutas.santafe_montevera.color}
-                weight={4}
-                opacity={0.7}
-              />
-            )}
-            
-            {/* Ruta Monte Vera → Santa Fe */}
-            {showMonteVeraRoute && (
-              <Polyline
-                positions={monteveraToSantaFeRoute}
-                color={configuracion.rutas.montevera_santafe.color}
-                weight={4}
-                opacity={0.7}
-              />
-            )}
-            
-            {/* Marcadores de paradas */}
-            {selectedRouteStops.map((stop) => {
-              const stopIcon = getStopIcon(stop.id)
-              const stopColor = getStopColor(stop.id)
-              const stopNumber = parseInt(stop.id.replace('MV', ''))
-              const routeName = stopNumber >= 0 && stopNumber <= 48 
-                ? 'Santa Fe → Monte Vera' 
-                : 'Monte Vera → Santa Fe'
-              
-              return stopIcon ? (
-                <Marker
-                  key={stop.id}
-                  position={[stop.coordenadas.lat, stop.coordenadas.lng]}
-                  icon={stopIcon}
-                >
-                  <Popup>
-                    <div className="text-center">
-                      <h3 className="font-semibold text-sm" style={{ color: stopColor }}>
-                        {stop.id} - {stop.nombre}
-                      </h3>
-                      <p className="text-xs text-gray-600 mb-1">{routeName}</p>
-                      <p className="text-xs text-gray-600">Localidad: {stop.localidad}</p>
-                    </div>
-                  </Popup>
-                </Marker>
-              ) : null
-            })}
-          </MapContainer>
-        </div>
-      </CardContent>
-    </Card>
+        {/* Ruta Santa Fe → Monte Vera */}
+        {showSantaFeRoute && (
+          <Polyline
+            positions={santaFeToMonteVeraRoute}
+            color={configuracion.rutas.santafe_montevera.color}
+            weight={4}
+            opacity={0.7}
+          />
+        )}
+        
+        {/* Ruta Monte Vera → Santa Fe */}
+        {showMonteVeraRoute && (
+          <Polyline
+            positions={monteveraToSantaFeRoute}
+            color={configuracion.rutas.montevera_santafe.color}
+            weight={4}
+            opacity={0.7}
+          />
+        )}
+        
+        {/* Marcadores de paradas */}
+        {selectedRouteStops.map((stop) => {
+          const stopIcon = getStopIcon(stop.id)
+          const stopColor = getStopColor(stop.id)
+          const stopNumber = parseInt(stop.id.replace('MV', ''))
+          const routeName = stopNumber >= 0 && stopNumber <= 48 
+            ? 'Santa Fe → Monte Vera' 
+            : 'Monte Vera → Santa Fe'
+          
+          return stopIcon ? (
+            <Marker
+              key={stop.id}
+              position={[stop.coordenadas.lat, stop.coordenadas.lng]}
+              icon={stopIcon}
+            >
+              <Popup>
+                <div className="text-center">
+                  <h3 className="font-semibold text-sm" style={{ color: stopColor }}>
+                    {stop.id} - {stop.nombre}
+                  </h3>
+                  <p className="text-xs text-gray-600 mb-1">{routeName}</p>
+                  <p className="text-xs text-gray-600">Localidad: {stop.localidad}</p>
+                  <p className="text-xs text-gray-500 mt-1">{stop.tiempoDesdeInicio}</p>
+                </div>
+              </Popup>
+            </Marker>
+          ) : null
+        })}
+      </MapContainer>
+    </div>
   )
 }

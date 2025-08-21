@@ -9,10 +9,32 @@ import { paradas as allParadasData } from '@/lib/data'
 import { useStopSelection } from '@/contexts/stop-selection-context'
 import DynamicStopsMap from '@/components/dynamic-stops-map'
 
+interface StopData {
+  id: string
+  nombre: string
+  coordenadas: { lat: number; lng: number }
+  tiempoDesdeInicio: string
+  localidad: string
+  referencias?: string[]
+}
+
 export default function StopsSection() {
-  const { selectedRoute, setSelectedRoute, setSelectedStop } = useStopSelection()
+  const { selectedRoute, setSelectedRoute, setSelectedStop, selectedStop } = useStopSelection()
   const [searchTerm, setSearchTerm] = useState('')
   const [expandedLocality, setExpandedLocality] = useState<string | null>(null)
+
+  // Función para manejar la selección de parada
+  const handleStopClick = (stop: StopData) => {
+    setSelectedStop(stop)
+    // Hacer scroll al mapa suavemente
+    const mapSection = document.getElementById('interactive-map')
+    if (mapSection) {
+      mapSection.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'center' 
+      })
+    }
+  }
 
   // Define route configurations
   const routeConfigs = {
@@ -157,11 +179,25 @@ export default function StopsSection() {
         <div className="space-y-4">
           <Card>
             <CardHeader className={`${routeConfigs[selectedRoute].bgColor} ${routeConfigs[selectedRoute].borderColor} border-b-2`}>
-              <CardTitle className={`${routeConfigs[selectedRoute].textColor} flex items-center space-x-2`}>
-                <MapPin className="h-5 w-5" />
-                <span>Lista de Paradas</span>
-              </CardTitle>
-              <p className="text-sm text-gray-600">{routeConfigs[selectedRoute].description}</p>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className={`${routeConfigs[selectedRoute].textColor} flex items-center space-x-2`}>
+                    <MapPin className="h-5 w-5" />
+                    <span>Lista de Paradas</span>
+                  </CardTitle>
+                  <p className="text-sm text-gray-600">{routeConfigs[selectedRoute].description}</p>
+                </div>
+                {selectedStop && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setSelectedStop(null)}
+                    className="text-xs"
+                  >
+                    Limpiar selección
+                  </Button>
+                )}
+              </div>
             </CardHeader>
             <CardContent className="p-0">
               {Object.keys(groupedStops).length === 0 ? (
@@ -178,7 +214,7 @@ export default function StopsSection() {
                   </Button>
                 </div>
               ) : (
-                <div className="max-h-96 overflow-y-auto">
+                <div className="h-96 lg:h-[500px] overflow-y-auto">
                   {Object.entries(groupedStops).map(([locality, stops]) => (
                     <div key={locality} className="border-b border-gray-100 last:border-b-0">
                       <button
@@ -204,19 +240,30 @@ export default function StopsSection() {
                           {stops.map((stop) => (
                             <div 
                               key={stop.id} 
-                              className="flex items-center justify-between p-4 pl-8 hover:bg-white transition-colors border-b border-gray-100 last:border-b-0"
+                              className={`flex items-center justify-between p-4 pl-8 hover:bg-white transition-colors border-b border-gray-100 last:border-b-0 ${
+                                selectedStop?.id === stop.id ? 'bg-orange-50 border-l-4 border-l-orange-500' : ''
+                              }`}
                             >
                               <div 
                                 className="flex items-center space-x-3 flex-1 min-w-0 cursor-pointer"
-                                onClick={() => setSelectedStop(stop)}
+                                onClick={() => handleStopClick(stop)}
                               >
                                 <div className="flex-shrink-0">
-                                  <Badge variant="outline" className="text-xs font-mono">
+                                  <Badge 
+                                    variant={selectedStop?.id === stop.id ? "default" : "outline"} 
+                                    className={`text-xs font-mono ${
+                                      selectedStop?.id === stop.id ? 'bg-orange-500 text-white' : ''
+                                    }`}
+                                  >
                                     {stop.id}
                                   </Badge>
                                 </div>
                                 <div className="min-w-0 flex-1">
-                                  <h4 className="font-medium text-gray-900 text-sm truncate hover:text-blue-600 transition-colors">
+                                  <h4 className={`font-medium text-sm truncate transition-colors ${
+                                    selectedStop?.id === stop.id 
+                                      ? 'text-orange-600 font-semibold' 
+                                      : 'text-gray-900 hover:text-blue-600'
+                                  }`}>
                                     {stop.nombre}
                                   </h4>
                                   <p className="text-xs text-gray-500">
@@ -252,16 +299,35 @@ export default function StopsSection() {
         </div>
 
         {/* Interactive Map */}
-        <div className="space-y-4">
+        <div className="space-y-4" id="interactive-map">
           <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <MapPin className="h-5 w-5 text-green-600" />
-                <span>Mapa Interactivo</span>
-              </CardTitle>
-              <p className="text-sm text-gray-600">
-                Visualiza todas las paradas en el mapa y haz clic para más información
-              </p>
+            <CardHeader className={`${routeConfigs[selectedRoute].bgColor} ${routeConfigs[selectedRoute].borderColor} border-b-2`}>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className={`${routeConfigs[selectedRoute].textColor} flex items-center space-x-2`}>
+                    <MapPin className="h-5 w-5" />
+                    <span>Mapa Interactivo</span>
+                  </CardTitle>
+                  <p className="text-sm text-gray-600">
+                    {routeConfigs[selectedRoute].description}
+                    {selectedStop && (
+                      <span className="text-orange-600 font-medium ml-2">
+                        | Parada seleccionada: {selectedStop.id} - {selectedStop.nombre}
+                      </span>
+                    )}
+                  </p>
+                </div>
+                {selectedStop && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setSelectedStop(null)}
+                    className="text-xs"
+                  >
+                    Centrar mapa
+                  </Button>
+                )}
+              </div>
             </CardHeader>
             <CardContent className="p-0">
               <div className="h-96 lg:h-[500px]">
