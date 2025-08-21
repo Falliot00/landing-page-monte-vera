@@ -14,7 +14,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/', '/admin/'],
       },
     ],
-    sitemap: 'https://tu-dominio.com/sitemap.xml', // Reemplaza con tu dominio real
-    host: 'https://tu-dominio.com', // Reemplaza con tu dominio real
+    sitemap: 'https://monteverasrl.com.ar/sitemap.xml', // Reemplaza con tu dominio real
+    host: 'https://monteverasrl.com.ar/', // Reemplaza con tu dominio real
   }
 }

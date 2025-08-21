@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://tu-dominio.com' // Reemplaza con tu dominio real
+  const baseUrl = 'https://monteverasrl.com.ar/' // Reemplaza con tu dominio real
   
   return [
     {

@@ -14,25 +14,27 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Monte Vera Express - Transporte Santa Fe ⇄ Monte Vera | Horarios y GPS en Tiempo Real",
+  title: "Empresa Monte Vera SRL - Transporte Santa Fe ⇄ Monte Vera | Horarios y GPS en Tiempo Real",
   description: "Servicio de transporte público entre Santa Fe y Monte Vera. Consulta horarios oficiales, ubicación GPS en tiempo real, 98 paradas en 6 localidades. Viajes cada 15-30 minutos, 55 minutos de recorrido.",
   keywords: [
     "transporte Monte Vera",
     "colectivo Santa Fe Monte Vera", 
     "horarios transporte público",
     "GPS tiempo real colectivos",
-    "Monte Vera Express",
+    "Monte Vera SRL",
+    "Empresa Monte Vera SRL",
     "transporte público Santa Fe",
     "paradas Monte Vera",
     "horarios colectivos",
     "transporte Espora",
+    "transporte Monte Vera",
     "transporte A. Gallardo",
     "transporte A. Mirta",
     "consulta GPS colectivos"
   ],
-  authors: [{ name: "Monte Vera Express" }],
-  creator: "Monte Vera Express",
-  publisher: "Monte Vera Express",
+  authors: [{ name: "Empresa Monte Vera SRL" }],
+  creator: "Empresa Monte Vera SRL",
+  publisher: "Empresa Monte Vera SRL",
   robots: {
     index: true,
     follow: true,
@@ -47,16 +49,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "es_AR",
-    url: "https://tu-dominio.com", // Reemplaza con tu dominio real
-    siteName: "Monte Vera Express",
-    title: "Monte Vera Express - Transporte Santa Fe ⇄ Monte Vera",
+    url: "https://monteverasrl.com.ar/", // Reemplaza con tu dominio real
+    siteName: "Empresa Monte Vera SRL",
+    title: "Empresa Monte Vera SRL - Transporte Santa Fe ⇄ Monte Vera",
     description: "Servicio de transporte público entre Santa Fe y Monte Vera con GPS en tiempo real, horarios oficiales y 98 paradas estratégicamente ubicadas.",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Monte Vera Express - Servicio de Transporte Público",
+        alt: "Empresa Monte Vera SRL - Servicio de Transporte Público",
       },
     ],
   },
@@ -68,10 +70,10 @@ export const metadata: Metadata = {
     creator: "@MonteVeraExpress",
   },
   alternates: {
-    canonical: "https://tu-dominio.com", // Reemplaza con tu dominio real
+    canonical: "https://monteverasrl.com.ar/", // Reemplaza con tu dominio real
     languages: {
-      'es-AR': "https://tu-dominio.com", // Reemplaza con tu dominio real
-      'es': "https://tu-dominio.com/es", // Reemplaza con tu dominio real
+      'es-AR': "https://monteverasrl.com.ar/", // Reemplaza con tu dominio real
+      'es': "https://monteverasrl.com.ar/es", // Reemplaza con tu dominio real
     },
   },
   category: "Transporte Público",
@@ -82,7 +84,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://tu-dominio.com'), // Reemplaza con tu dominio real
+  metadataBase: new URL('https://monteverasrl.com.ar/'), // Reemplaza con tu dominio real
   verification: {
     google: process.env.GOOGLE_SITE_VERIFICATION,
     other: {
@@ -130,8 +132,8 @@ export default function RootLayout({
               "@type": "TransportationCompany",
               "name": "Monte Vera Express",
               "alternateName": "Transporte Monte Vera",
-              "url": "https://tu-dominio.com", // Reemplaza con tu dominio real
-              "logo": "https://tu-dominio.com/logo.png", // Reemplaza con tu dominio real
+              "url": "https://monteverasrl.com.ar/", // Reemplaza con tu dominio real
+              "logo": "https://monteverasrl.com.ar/logo.png", // Reemplaza con tu dominio real
               "description": "Servicio de transporte público entre Santa Fe y Monte Vera con GPS en tiempo real y horarios oficiales.",
               "serviceArea": {
                 "@type": "GeoCircle",
