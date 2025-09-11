@@ -794,36 +794,36 @@ export const tarifas = {
   vigencia: "2025-01-17",
   matriz: {
     "Santa Fe": {
-      "Espora": 1250.00,
-      "Parada 10": 1298.00,
-      "A. Gallardo": 1525.00,
-      "A. Mirta": 1753.00,
-      "Monte Vera": 2162.00
+      "Espora": 1600.00,
+      "Parada 10": 1600.00,
+      "A. Gallardo": 1951.00,
+      "A. Mirta": 2241.00,
+      "Monte Vera": 2765.00
     },
     "Espora": {
-      "Parada 10": 1250.00,
-      "A. Gallardo": 1250.00,
-      "A. Mirta": 1252.00,
-      "Monte Vera": 1662.00
+      "Parada 10": 1600.00,
+      "A. Gallardo": 1600.00,
+      "A. Mirta": 1602.00,
+      "Monte Vera": 2125.00
     },
     "Parada 10": {
-      "A. Gallardo": 1250.00,
-      "A. Mirta": 1250.00,
-      "Monte Vera": 1298.00
+      "A. Gallardo": 1600.00,
+      "A. Mirta": 1600.00,
+      "Monte Vera": 1660.00
     },
     "A. Gallardo": {
-      "A. Mirta": 1250.00,
-      "Monte Vera": 1250.00
+      "A. Mirta": 1600.00,
+      "Monte Vera": 1600.00
     },
     "A. Mirta": {
-      "Monte Vera": 1250.00
+      "Monte Vera": 1600.00
     },
     "Monte Vera": {
-      "Santa Fe": 2162.00,
-      "Espora": 1662.00,
-      "Parada 10": 1298.00,
-      "A. Gallardo": 1250.00,
-      "A. Mirta": 1250.00
+      "Santa Fe": 2765.00,
+      "Espora": 2241.00,
+      "Parada 10": 1951.00,
+      "A. Gallardo": 1600.00,
+      "A. Mirta": 1600.00
     }
   },
   metodoPago: "SUBE_UNICAMENTE",
