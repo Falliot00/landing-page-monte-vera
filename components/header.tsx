@@ -17,7 +17,7 @@ export default function Header({ activeSection }: HeaderProps) {
   const menuItems = [
     { id: 'inicio', label: 'Inicio', href: '/' },
     { id: 'consultor', label: 'Consultor GPS', href: '/consultor-gps' },
-    { id: 'nosotros', label: 'Nosotros', href: '/#nosotros' },
+    //{ id: 'nosotros', label: 'Nosotros', href: '/#nosotros' },
     { id: 'horarios', label: 'Horarios', href: '/#horarios' },
     { id: 'tarifas', label: 'Tarifas', href: '/#tarifas' },
     { id: 'paradas', label: 'Paradas', href: '/#paradas' },

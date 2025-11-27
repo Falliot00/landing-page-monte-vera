@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Header from '@/components/header'
 import HeroSection from '@/components/hero-section'
-import AboutSection from '@/components/about-section'
+//import AboutSection from '@/components/about-section'
 import SchedulesSection from '@/components/schedules-section'
 import FaresSection from '@/components/fares-section'
 import StopsSection from '@/components/stops-section'
@@ -49,9 +49,9 @@ export default function HomePage() {
             <RealTimeConsultant />
           </section>*/}
           
-          <section id="nosotros" className="py-16">
+          {/*<section id="nosotros" className="py-16">
             <AboutSection />
-          </section>
+          </section>*/}
           
           <section id="horarios" className="py-16 bg-gray-50">
             <SchedulesSection />
