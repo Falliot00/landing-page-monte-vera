@@ -791,7 +791,9 @@ export const paradas = {
 };
 
 export const tarifas = {
-  vigencia: "2025-01-17",
+  vigencia: "10-09-2025",
+  maximo: "$ 2765.00",
+  minimo: "$ 1600.00",
   matriz: {
     "Santa Fe": {
       "Espora": 1600.00,

@@ -298,7 +298,7 @@ export default function FaresSection() {
           <AlertTriangle className="h-4 w-4 text-yellow-600" />
           <AlertDescription className="text-yellow-900">
             <strong className="text-yellow-800">Recomendación:</strong> Verificá que tu tarjeta SUBE tenga saldo suficiente antes de abordar. 
-            Mínimo recomendado: $2.162,00 para recorrido completo.
+            Mínimo recomendado: {tarifas.maximo} para recorrido completo.
           </AlertDescription>
         </Alert>
 
