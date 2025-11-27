@@ -54,7 +54,7 @@ export default function SchedulesSection() {
       })
     )
 
-  const [currentTime, setCurrentTime] = useState(argentinaTime())
+  const [currentTime, setCurrentTime] = useState<Date | null>(null)
 
   useEffect(() => {
     setCurrentTime(argentinaTime())
@@ -64,6 +64,10 @@ export default function SchedulesSection() {
   }, [])
 
   const getTimeStatus = (time: string) => {
+    if (!currentTime) {
+      return 'upcoming'
+    }
+
     const currentHour = currentTime.getHours()
     const currentMinute = currentTime.getMinutes()
     const [hour, minute] = time.split(':').map(Number)
