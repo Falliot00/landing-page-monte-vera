@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { MapPin, Bus, Navigation } from 'lucide-react'
-import { gpsService } from '@/lib/gps-service'
+import { gpsService, GPSService } from '@/lib/gps-service'
 import { configuracion } from '@/lib/data'
 import coordenadasSFMV from '@/lib/coordenadas_recorrido_santa_fe_monte_vera.json'
 import coordenadasMVSF from '@/lib/coordenadas_recorrido_monte_vera_santa_fe.json'
@@ -427,7 +427,7 @@ export default function MapComponent() {
                 >
                   <Popup>
                     <div className="text-center">
-                      <h3 className="font-semibold text-sm">Colectivo {device.id}</h3>
+                      <h3 className="font-semibold text-sm">Colectivo {GPSService.getInternalNumber(device.id)}</h3>
                       <p className="text-xs">{getDeviceStatus(device)}</p>
                       <p className="text-xs text-gray-500">
                         Coordenadas: {device.mlat}, {device.mlng}

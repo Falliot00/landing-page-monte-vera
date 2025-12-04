@@ -96,13 +96,13 @@ export default function SchedulesSection() {
 
       {/* Selector de Ruta */}
       <div className="flex justify-center mb-8">
-        <Tabs value={selectedRoute} onValueChange={setSelectedRoute} className="w-full max-w-md">
+        <Tabs value={selectedRoute} onValueChange={setSelectedRoute} className="w-full max-w-2xl">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="santafe_montevera" className="text-sm">
-              SF → MV
+            <TabsTrigger value="santafe_lagunapaiva" className="text-sm md:text-base">
+              Desde Santa Fe
             </TabsTrigger>
-            <TabsTrigger value="montevera_santafe" className="text-sm">
-              MV → SF
+            <TabsTrigger value="lagunapaiva_santafe" className="text-sm md:text-base">
+              Desde Laguna Paiva
             </TabsTrigger>
           </TabsList>
         </Tabs>
