@@ -22,18 +22,16 @@ const JSESSION = 'cf6b70a3-c82b-4392-8ab6-bbddce336222';
 
 // Mapeo de números de dispositivo a números internos
 const DEVICE_TO_INTERNAL: { [key: string]: string } = {
-  '20007': '5',
-  '20006': '7',
-  '20011': '8',
-  '20009': '13',
-  '20010': '14',
-  '20013': '17',
-  '20008': '20'
+  '20001': '101',
+  '20002': '106',
+  '20003': '107',
+  '20004': '108',
+  '20005': '109'
 };
 
 export class GPSService {
   private static instance: GPSService;
-  private deviceIds = ['20007', '20006', '20011', '20009', '20010', '20013', '20008'];
+  private deviceIds = ['20001', '20002', '20003', '20004', '20005'];
 
   // Método para obtener el número interno de un dispositivo
   static getInternalNumber(deviceId: string): string {
