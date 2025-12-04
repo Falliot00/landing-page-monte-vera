@@ -95,8 +95,8 @@ export default function Header({ activeSection }: HeaderProps) {
           <Button
             variant="ghost"
             size="sm"
-            className={`lg:hidden relative p-2 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${
-              isMenuOpen ? 'bg-green-50 text-green-600' : 'hover:bg-green-50/50'
+            className={`lg:hidden relative p-2 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 text-green-600 ${
+              isMenuOpen ? 'bg-green-50' : 'hover:bg-green-50/50'
             }`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-expanded={isMenuOpen}
