@@ -190,12 +190,12 @@ export default function RealTimeConsultant() {
               <Tabs value={selectedRoute} onValueChange={setSelectedRoute}>
                 <TabsList className="grid w-full grid-cols-2 h-12 bg-gray-100 p-1">
                   <TabsTrigger value="santafe_montevera" className="text-xs sm:text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-md transition-all duration-200">
-                    <span className="hidden sm:inline">Santa Fe → Monte Vera</span>
-                    <span className="sm:hidden">SF → MV</span>
+                    <span className="">Santa Fe → Monte Vera</span>
+                    {/*<span className="sm:hidden">SF → MV</span>*/}
                   </TabsTrigger>
                   <TabsTrigger value="montevera_santafe" className="text-xs sm:text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-md transition-all duration-200">
-                    <span className="hidden sm:inline">Monte Vera → Santa Fe</span>
-                    <span className="sm:hidden">MV → SF</span>
+                    <span className="">Monte Vera → Santa Fe</span>
+                    {/*<span className="sm:hidden">MV → SF</span>*/}
                   </TabsTrigger>
                 </TabsList>
               </Tabs>

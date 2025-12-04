@@ -102,7 +102,7 @@ export default function SchedulesSection() {
               Desde Santa Fe
             </TabsTrigger>
             <TabsTrigger value="montevera_santafe" className="text-sm md:text-base">
-              Desde Laguna Paiva
+              Desde Monte Vera
             </TabsTrigger>
           </TabsList>
         </Tabs>

@@ -255,8 +255,8 @@ export default function MapComponent() {
     const speed = device.sp || 0
     
     if (!isOnline) return 'Desconectado'
-    if (speed > 5) return `En ruta`
-    return 'Parado'
+    if (speed > 5) return `Circulando`
+    return 'Detenido'
   }
 
   // Función para crear icono rotado según la dirección del vehículo
@@ -366,8 +366,8 @@ export default function MapComponent() {
             <span>MV → SF</span>
           </div>
           <div className="flex items-center space-x-2">
-            <span>🟢 Andando</span>
-            <span>🟡 Quieto</span>
+            <span>🟢 Circulando</span>
+            <span>🟡 Detenido</span>
             <span>🔴 Desconectado</span>
           </div>
           {selectedStop && (
