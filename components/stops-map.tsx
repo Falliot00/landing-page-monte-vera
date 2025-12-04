@@ -7,11 +7,13 @@ import { paradas, configuracion } from '@/lib/data'
 import { useStopSelection } from '@/contexts/stop-selection-context'
 import coordenadasSFMV from '@/lib/coordenadas_recorrido_santa_fe_monte_vera.json'
 import coordenadasMVSF from '@/lib/coordenadas_recorrido_monte_vera_santa_fe.json'
+import { UseTwoFingerMap } from '@/lib/use-two-finger-map'
 
 // Componente helper para manejar el centro y zoom del mapa
 function MapController() {
   const map = useMap()
   const { selectedStop, selectedRoute } = useStopSelection()
+  UseTwoFingerMap()
 
   useEffect(() => {
     if (selectedStop) {

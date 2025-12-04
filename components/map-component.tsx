@@ -12,6 +12,7 @@ import { configuracion } from '@/lib/data'
 import coordenadasSFMV from '@/lib/coordenadas_recorrido_santa_fe_monte_vera.json'
 import coordenadasMVSF from '@/lib/coordenadas_recorrido_monte_vera_santa_fe.json'
 import { useStopSelection } from '@/contexts/stop-selection-context'
+import { UseTwoFingerMap } from '@/lib/use-two-finger-map'
 
 interface DeviceLocation {
   id: string;
@@ -25,6 +26,12 @@ interface DeviceLocation {
   ol: number;
   hx?: number; // Dirección en grados (0-360), 0 = Norte
   pk?: number; // Tiempo en segundos, si > 100 no mostrar
+}
+
+// Componente helper para manejar el mapa con dos dedos
+function MapControllerRealTime() {
+  UseTwoFingerMap()
+  return null
 }
 
 export default function MapComponent() {
@@ -386,6 +393,7 @@ export default function MapComponent() {
             style={{ height: '100%', width: '100%' }}
             className="z-0"
           >
+            <MapControllerRealTime />
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
