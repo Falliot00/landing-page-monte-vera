@@ -42,47 +42,6 @@
       "purpose": "any"
     }
   ],
-  "shortcuts": [
-    {
-      "name": "Consulta GPS",
-      "short_name": "GPS",
-      "description": "Consultar ubicación en tiempo real",
-      "url": "/gps",
-      "icons": [
-        {
-          "src": "/shortcut-gps.png",
-          "sizes": "96x96",
-          "type": "image/png"
-        }
-      ]
-    },
-    {
-      "name": "Horarios",
-      "short_name": "Horarios",
-      "description": "Ver horarios de servicio",
-      "url": "/horarios",
-      "icons": [
-        {
-          "src": "/shortcut-schedule.png",
-          "sizes": "96x96",
-          "type": "image/png"
-        }
-      ]
-    },
-    {
-      "name": "Paradas",
-      "short_name": "Paradas",
-      "description": "Ver todas las paradas",
-      "url": "/paradas",
-      "icons": [
-        {
-          "src": "/shortcut-stops.png",
-          "sizes": "96x96",
-          "type": "image/png"
-        }
-      ]
-    }
-  ],
   "related_applications": [],
   "prefer_related_applications": false
 }

@@ -62,19 +62,8 @@ export const metadata: Metadata = {
       },
     ],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Monte Vera Express - Transporte Santa Fe ⇄ Monte Vera",
-    description: "Consulta horarios y ubicación GPS en tiempo real. 98 paradas, viajes cada 15-30 minutos.",
-    images: ["/twitter-image.jpg"],
-    creator: "@MonteVeraExpress",
-  },
   alternates: {
     canonical: "https://monteverasrl.com.ar/", // Reemplaza con tu dominio real
-    languages: {
-      'es-AR': "https://monteverasrl.com.ar/", // Reemplaza con tu dominio real
-      'es': "https://monteverasrl.com.ar/es", // Reemplaza con tu dominio real
-    },
   },
   category: "Transporte Público",
   classification: "Servicio de Transporte",
@@ -176,8 +165,25 @@ export default function RootLayout({
                 ]
               },
               "knowsAbout": ["Transporte público", "GPS tiempo real", "Horarios de colectivos"],
+              "contactPoint": [
+                {
+                  "@type": "ContactPoint",
+                  "telephone": "+54-342-412-3345",
+                  "contactType": "customer service",
+                  "areaServed": "AR",
+                  "availableLanguage": ["es"],
+                  "email": "info@monteverasrl.com.ar",
+                  "hoursAvailable": {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                    "opens": "10:00",
+                    "closes": "12:00"
+                  }
+                }
+              ],
               "sameAs": [
                 "https://www.facebook.com/profile.php?id=100057168711212",
+                "https://www.whatsapp.com/channel/0029Vau6xc823n3jemqpdd31"
               ]
             })
           }}
