@@ -17,7 +17,7 @@ interface CalculoTarifa {
   valido?: boolean
   mensaje: string
 }
-import { DollarSign, CreditCard, AlertTriangle, CheckCircle } from 'lucide-react'
+import { DollarSign, CreditCard, AlertTriangle, CheckCircle, XCircle } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Alert, AlertDescription } from '@/components/ui/alert'
@@ -68,7 +68,7 @@ export default function FaresSection() {
         </h2>
         
         <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
-          Tarifas por zonas vigentes desde el {tarifas.vigencia}. Pago únicamente con tarjeta SUBE.
+          Tarifas por zonas vigentes desde el {tarifas.vigencia}. Pagos habilitados con tarjeta SUBE, códigos QR de billeteras virtuales y tarjetas Visa o Mastercard crédito/débito.
         </p>
       </div>
 
@@ -151,7 +151,7 @@ export default function FaresSection() {
         </CardContent>
       </Card>
 
-      {/* Método de Pago - Prominente */}
+      {/* Métodos de Pago */}
       <div className="mb-8">
         <Card className="bg-gradient-to-r from-green-50 to-green-100 border-green-200 shadow-lg">
           <CardContent className="py-6">
@@ -159,25 +159,50 @@ export default function FaresSection() {
               <div className="p-2 bg-green-600 rounded-full">
                 <CreditCard className="h-6 w-6 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-green-900">Método de Pago</h3>
+              <h3 className="text-xl font-bold text-green-900">Métodos de Pago</h3>
             </div>
             <div className="space-y-4">
               <div className="flex items-center justify-center space-x-2 mb-4">
                 <CheckCircle className="h-5 w-5 text-green-600" />
-                <span className="font-bold text-green-900">SUBE ÚNICAMENTE</span>
+                <span className="font-bold text-green-900">Aceptamos SUBE, QR y tarjetas crédito/débito</span>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-green-800">
-                <div className="flex items-center space-x-2 justify-center">
-                  <span className="w-2 h-2 bg-green-600 rounded-full flex-shrink-0"></span>
-                  <span>NO se acepta dinero efectivo</span>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-green-800">
+                <div className="p-4 bg-white/70 rounded-lg border border-green-200 shadow-sm">
+                  <h4 className="text-lg font-semibold text-green-900 mb-3 text-center">SUBE</h4>
+                  <div className="space-y-2">
+                    <div className="flex items-start space-x-2">
+                      <span className="w-2 h-2 bg-green-600 rounded-full flex-shrink-0 mt-1"></span>
+                      <span>Tarjetas SUBE físicas o digitales</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center space-x-2 justify-center">
-                  <span className="w-2 h-2 bg-green-600 rounded-full flex-shrink-0"></span>
-                  <span>Una única tarjeta por pasajero</span>
+                <div className="p-4 bg-white/70 rounded-lg border border-green-200 shadow-sm">
+                  <h4 className="text-lg font-semibold text-green-900 mb-3 text-center">QR</h4>
+                  <div className="space-y-2">
+                    <div className="flex items-start space-x-2">
+                      <span className="w-2 h-2 bg-green-600 rounded-full flex-shrink-0 mt-1"></span>
+                      <span>Códigos QR de billeteras virtuales</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center space-x-2 justify-center">
-                  <span className="w-2 h-2 bg-green-600 rounded-full flex-shrink-0"></span>
-                  <span>Se acepta SUBE digital</span>
+                <div className="p-4 bg-white/70 rounded-lg border border-green-200 shadow-sm">
+                  <h4 className="text-lg font-semibold text-green-900 mb-3 text-center">Tarjetas</h4>
+                  <div className="space-y-2">
+                    <div className="flex items-start space-x-2">
+                      <span className="w-2 h-2 bg-green-600 rounded-full flex-shrink-0 mt-1"></span>
+                      <span>Tarjetas Visa/Mastercard crédito o débito</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-sm font-medium">
+                <div className="flex items-center space-x-2 text-red-700">
+                  <XCircle className="h-5 w-5 text-red-600" />
+                  <span>No se acepta dinero en efectivo</span>
+                </div>
+                <div className="flex items-center space-x-2 text-yellow-700">
+                  <AlertTriangle className="h-5 w-5 text-yellow-500" />
+                  <span>Un medio de pago por pasajero</span>
                 </div>
               </div>
             </div>

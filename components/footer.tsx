@@ -50,32 +50,32 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4">Enlaces Rápidos</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#inicio" className="text-gray-300 hover:text-green-400 transition-colors">
+                <a href="/.#inicio" className="text-gray-300 hover:text-green-400 transition-colors">
                   Inicio
                 </a>
               </li>
               <li>
-                <a href="#consultor" className="text-gray-300 hover:text-green-400 transition-colors">
-                  Consultor GPS
+                <a href="/consultor-gps" className="text-gray-300 hover:text-green-400 transition-colors">
+                  Horarios en tiempo real
                 </a>
               </li>
               <li>
-                <a href="#horarios" className="text-gray-300 hover:text-green-400 transition-colors">
+                <a href="/.#horarios" className="text-gray-300 hover:text-green-400 transition-colors">
                   Horarios
                 </a>
               </li>
               <li>
-                <a href="#tarifas" className="text-gray-300 hover:text-green-400 transition-colors">
+                <a href="/.#tarifas" className="text-gray-300 hover:text-green-400 transition-colors">
                   Tarifas
                 </a>
               </li>
               <li>
-                <a href="#paradas" className="text-gray-300 hover:text-green-400 transition-colors">
+                <a href="/.#paradas" className="text-gray-300 hover:text-green-400 transition-colors">
                   Paradas
                 </a>
               </li>
               <li>
-                <a href="#contacto" className="text-gray-300 hover:text-green-400 transition-colors">
+                <a href="/.#contacto" className="text-gray-300 hover:text-green-400 transition-colors">
                   Contacto
                 </a>
               </li>
