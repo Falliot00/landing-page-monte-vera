@@ -1,6 +1,6 @@
 {
-  "name": "Monte Vera Express - Transporte Público",
-  "short_name": "Monte Vera Express",
+  "name": "Monte Vera SRL - Transporte Público",
+  "short_name": "Monte Vera SRL",
   "description": "Consulta horarios y ubicación GPS en tiempo real del transporte público entre Santa Fe y Monte Vera",
   "start_url": "/",
   "display": "standalone",

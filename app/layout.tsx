@@ -130,7 +130,7 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "TransportationCompany",
-              "name": "Monte Vera Express",
+              "name": "Monte Vera SRL",
               "alternateName": "Transporte Monte Vera",
               "url": "https://monteverasrl.com.ar/", // Reemplaza con tu dominio real
               "logo": "https://monteverasrl.com.ar/logo.png", // Reemplaza con tu dominio real
