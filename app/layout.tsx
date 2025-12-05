@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     description: "Servicio de transporte público entre Santa Fe y Monte Vera con GPS en tiempo real, horarios oficiales y 98 paradas estratégicamente ubicadas.",
     images: [
       {
-        url: "/imagenes/LogoMV.png",
+        url: "/imagenes/LogoBlancoMV.png",
         width: 1200,
         height: 630,
         alt: "Empresa Monte Vera SRL - Servicio de Transporte Público",
