@@ -219,11 +219,11 @@ export default function FaresSection() {
           </p>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto relative">
             <table className="w-full border-collapse border border-gray-300">
               <thead>
                 <tr className="bg-gray-50">
-                  <th className="border border-gray-300 p-3 text-left font-semibold">
+                  <th className="border border-gray-300 p-3 text-left font-semibold sticky left-0 bg-gray-50 z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">
                     ORIGEN / DESTINO
                   </th>
                   {zonas.map((zona) => (
@@ -236,7 +236,7 @@ export default function FaresSection() {
               <tbody>
                 {zonas.map((origen, idx_origen) => (
                   <tr key={origen} className="hover:bg-gray-50">
-                    <td className="border border-gray-300 p-3 font-semibold bg-gray-50">
+                    <td className="border border-gray-300 p-3 font-semibold bg-gray-50 sticky left-0 z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">
                       {origen}
                     </td>
                     {zonas.map((destino, idx_destino) => {
