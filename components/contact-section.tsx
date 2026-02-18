@@ -115,7 +115,7 @@ export default function ContactSection() {
               <Card key={index} className="hover:shadow-md transition-shadow">
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-3">
-                    <div className="text-green-600 mt-1">
+                    <div className="text-red-600 mt-1">
                       {info.icon}
                     </div>
                     <div>
@@ -136,9 +136,9 @@ export default function ContactSection() {
           </div>
 
           {/* Redes Sociales */}
-          <Card className="bg-green-50 border-green-200">
+          <Card className="bg-red-50 border-red-200">
             <CardHeader>
-              <CardTitle className="flex items-center space-x-2 text-green-900">
+              <CardTitle className="flex items-center space-x-2 text-red-900">
                 <MessageCircle className="h-5 w-5" />
                 <span>Síguenos en Redes Sociales</span>
               </CardTitle>
@@ -151,7 +151,7 @@ export default function ContactSection() {
                   rel="noopener noreferrer" 
                   className="flex-1"
                 >
-                  <Button variant="outline" size="sm" className="w-full">
+                  <Button variant="outline" size="sm" className="w-full text-red-600 hover:text-red-700 hover:bg-red-100 border-red-200">
                     Facebook
                   </Button>
                 </a>
@@ -161,12 +161,12 @@ export default function ContactSection() {
                   rel="noopener noreferrer" 
                   className="flex-1"
                 >
-                  <Button variant="outline" size="sm" className="w-full">
+                  <Button variant="outline" size="sm" className="w-full text-red-600 hover:text-red-700 hover:bg-red-100 border-red-200">
                     WhatsApp
                   </Button>
                 </a>
               </div>
-              <p className="text-sm text-green-800 mt-3">
+              <p className="text-sm text-red-800 mt-3">
                 Mantente informado sobre horarios, novedades y actualizaciones del servicio.
               </p>
             </CardContent>
@@ -210,6 +210,7 @@ export default function ContactSection() {
                       onChange={handleInputChange}
                       required
                       placeholder="Tu nombre completo"
+                      className="focus:ring-red-500 focus:border-red-500"
                     />
                   </div>
                   <div>
@@ -221,6 +222,7 @@ export default function ContactSection() {
                       value={formData.telefono}
                       onChange={handleInputChange}
                       placeholder="Tu número de teléfono"
+                      className="focus:ring-red-500 focus:border-red-500"
                     />
                   </div>
                 </div>
@@ -236,6 +238,7 @@ export default function ContactSection() {
                     onChange={handleInputChange}
                     required
                     placeholder="tu@email.com"
+                    className="focus:ring-red-500 focus:border-red-500"
                   />
                 </div>
 
@@ -249,6 +252,7 @@ export default function ContactSection() {
                     onChange={handleInputChange}
                     required
                     placeholder="¿En qué podemos ayudarte?"
+                    className="focus:ring-red-500 focus:border-red-500"
                   />
                 </div>
 
@@ -263,13 +267,14 @@ export default function ContactSection() {
                     required
                     rows={5}
                     placeholder="Describe tu consulta o sugerencia..."
+                    className="focus:ring-red-500 focus:border-red-500"
                   />
                 </div>
 
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-green-600 hover:bg-green-700"
+                  className="w-full bg-red-600 hover:bg-red-700 focus:ring-red-500"
                   size="lg"
                 >
                   {isSubmitting ? (
